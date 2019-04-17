@@ -1,0 +1,95 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/data/data.js"></script>
+<script>
+        function bg3(){
+            var r=Math.floor(Math.random()*255);
+            var g=Math.floor(Math.random()*255);
+            var b=Math.floor(Math.random()*255);
+            var a=Math.floor(Math.random()*255);
+            return "rgb("+r+','+g+','+b+','+a+")";//所有方法的拼接都可以用ES6新特性`其他字符串{$变量名}`替换
+        }
+    function turncolors(){
+        console.log(bg3());
+        $("#insider").css("color",bg3());
+    }
+    setInterval(turncolors,300);
+</script>
+<title>{$title} - Fly社区</title>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="" style="padding-top:20px;">
+        <div class="fly-msg" style="margin-bottom: 20px;">
+            Hi，{$data.name}，你已是我们的正式社员。
+        </div>
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-md6">
+                <div class="fly-panel fly-signin fly-panel-border">
+                    <div class="fly-panel-title">
+                        签到
+                        <i class="fly-mid"></i>
+                        <a href="javascript:;" class="fly-link" id="LAY_signinHelp">说明</a>
+                        <i class="fly-mid"></i>
+                        <a href="javascript:;" class="fly-link" id="LAY_signinTop">活跃榜<span class="layui-badge-dot"></span></a>
+                        <span class="fly-signin-days">已连续签到<cite>{$signedCount}</cite>天</span>
+                    </div>
+                    <div class="fly-panel-main fly-signin-main">
+                        {if condition="$signed eq NULL"}
+                        <a href="javascript:signed({$data.username},{$signedCount})">
+                            <button class="layui-btn layui-btn-danger">今日签到</button>
+                        </a>
+                        {else/}
+                        <button class="layui-btn layui-btn-disabled">今日已签到</button>
+                        {/if}
+                        <span>可获得<cite>{$signedCount}</cite>飞吻</span>
+                        <div>
+                            最后一次签到时间:{:date('Y-m-d H:i:s',$signedTime.date)}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md6">
+                <div class="fly-panel fly-panel-border">
+                    <div class="fly-panel-title">
+                        我的会员信息
+                    </div>
+                    <div class="fly-panel-main layui-text" style="padding: 18px 15px; height: 65px; line-height: 26px;">
+                        <p>您的财富：{$data.money} 金</p>
+                        <p>您当前为：
+                            {if condition="$data.insider eq '普通会员'"}{$data.insider}{/if}
+                            {if condition="$data.insider eq '黄金会员'"}<span style="color:#F5E786">{$data.insider}</span>{/if}
+                            {if condition="$data.insider eq '钻石会员'"}<span style="color:#E3E1E2">{$data.insider}</span>{/if}
+                            {if condition="$data.insider eq '至尊会员'"}<span id="insider">{$data.insider}</span>{/if}
+                        </p>
+                        <p>到期时间：{$data.last_insider}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-col-md12" style="margin-top: -20px;">
+                <div class="fly-panel fly-panel-border">
+                    <div class="fly-panel-title">
+                        快捷方式
+                    </div>
+                    <div class="fly-panel-main">
+                        <ul class="layui-row layui-col-space10 fly-shortcut">
+                            <li class="layui-col-sm3 layui-col-xs4"> <a href="{:url('Data/set')}?tion=1"><i class="layui-icon iconfont"></i><cite>修改信息</cite></a> </li>
+                            <li class="layui-col-sm3 layui-col-xs4"> <a href="{:url('Data/set')}?tion=3"><i class="layui-icon iconfont"></i><cite>修改密码</cite></a> </li>
+                            <li class="layui-col-sm3 layui-col-xs4"> <a href="{:url('Note/addNote')}"><i class="layui-icon iconfont"></i><cite>发表新帖</cite></a> </li>
+                            <li class="layui-col-sm3 layui-col-xs4 LAY_search"> <a href="{:url('Message/message')}"><i class="layui-icon iconfont"></i><cite>我的消息</cite></a> </li>
+                            <li class="layui-col-sm3 layui-col-xs4"> <a href="{:url('Data/note')}?tion=2"><i class="layui-icon iconfont"></i><cite>我的收藏</cite></a> </li>
+                            <li class="layui-col-sm3 layui-col-xs4"> <a href="{:url('Data/recharge')}?tion=1"><i class="layui-icon iconfont"></i><cite>充值会员</cite></a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

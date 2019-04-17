@@ -1,0 +1,166 @@
+{include file="../application/index/view/header.html" /}
+<title>{$title} - 创新论坛</title>
+<script src="http://localhost/Postbar/public/static/js/friend/friend.js"></script>
+    <style>
+        table{
+            margin:10px;
+        }
+        table ul{
+            padding: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">我的好友</a></li>{else/}<li><a href="?tion=1">我的好友</a></li>{/if}
+                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">搜索好友</a></li>{else/}<li><a href="?tion=2">搜索好友</a></li>{/if}
+                {if condition="$tion eq 3"}<li class="layui-this"><a href="?tion=3">黑名单</a></li>{else/}<li><a href="?tion=3">黑名单</a></li>{/if}
+                <li><a href="{:url('Friend/message')}">消息列表</a></li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                {if condition="$tion eq 1"}
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="LAY_mySendCard"></table>
+                    <div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="LAY_mySendCard" style=" ">
+                        <div class="layui-table-box">
+                            <div class="layui-table-header">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="title" data-key="1-0-0" data-minwidth="300" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>用户昵称</span>
+                                            </div></th>
+                                        <th data-field="status" data-key="1-0-1" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4" align="center">
+                                                <span>状态</span>
+                                            </div></th>
+                                        <th data-field="time" data-key="1-0-3" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4" align="center">
+                                                <span>添加时间</span>
+                                            </div></th>
+                                        <th data-field="4" data-key="1-0-4" class=" layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>会员</span>
+                                            </div></th>
+                                        <th data-field="5" data-key="1-0-5" class=" layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>操作</span>
+                                            </div>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            {if condition="$friends neq null"}
+                            <div class="layui-table-body layui-table-main">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <tbody>
+                                    {volist name="friends" id="vo"}
+                                    <tr data-index="0" class="">
+                                        <td data-field="title" data-key="1-0-0" data-content="{$vo.name}" data-minwidth="300" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <a href="{:url('Data/user')}?username={$vo.friend}" target="_blank" class="layui-table-link">{$vo.name}</a>
+                                            </div></td>
+                                        <td data-field="status" data-key="1-0-1" align="center" data-content="0" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    <span style="color: #999;">
+                                                        {$vo.state}
+                                                    </span>
+                                            </div></td>
+                                        <td data-field="time" data-key="1-0-3" align="center" data-content="1541990727246" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                {:date('Y-m-d H:i:s',$vo.date)}
+                                            </div></td>
+                                        <td data-field="4" data-key="1-0-4" data-content="" class="layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span style="font-size: 12px;">{$vo.insider}</span>
+                                            </div></td>
+                                        <td data-field="5" data-key="1-0-5" data-content="" class="layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <a class="layui-btn layui-btn-xs" href="{:url('Friend/message')}?friend={$vo.id}">
+                                                    发信息
+                                                </a>
+                                                <a class="layui-btn layui-btn-xs" href="javascript:delFriend({$vo.friend})">
+                                                    删除
+                                                </a>
+                                            </div></td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {else/}
+                            <div class="layui-table-body layui-table-main">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <tbody></tbody>
+                                </table>
+                                <a href="?tion=2">
+                                    <div class="layui-none" style="color:#128BCD">
+                                        无好友,赶快添加吧!
+                                    </div>
+                                </a>
+                            </div>
+                            {/if}
+                        </div>
+                        <style>.laytable-cell-1-0-4{ width: 181px; }</style>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 2"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_pass" class="layui-form-label">用户账号</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="friend" name="friend" required="" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span id="error" style="color: red"></span>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="friend()">搜索</button>
+                    </div>
+                    <table id="content" border="1"></table>
+                    <div class="layui-form-item" id="getFriend" style="display:none">
+
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 3"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_pass" class="layui-form-label">新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="pass" name="pass" required="" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            6到16个字符
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="L_repass" class="layui-form-label">确认密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="repass" name="repass" required="" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="upPass()">确认修改</button>
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="http://localhost/Postbar/public/static/acss/tion.css"/>
+    <link rel="icon" href="http://localhost/Postbar/public/static/img/logo.png"/>
+    <script src="http://localhost/Postbar/public/static/js/jquery.js"></script>
+    <script type="text/javascript" src="http://localhost/Postbar/public/static/js/layer/layer.js"></script>
+    <title>找回密码 - 创新论坛</title>
+    <script>
+        $(function () {
+            $("#ul").children().click(function(){
+                $("#ul").children().css("background-color",'#dcdcdc');
+                $(this).css("background-color","#E7EFD1");
+                var tab = $(this).attr('id');
+                $("#tabName").children().css('display','none');
+                $("#tabName").children().eq(tab).css('display','block');
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="meau">
+    <div id="ul">
+        <div id="0">密保验证</div>
+        <div id="1">手机号验证</div>
+        <div id="2">申诉找回</div>
+        <div id="3">邮箱找回</div>
+    </div>
+    <div id="tabName">
+
+        <div class="body" style="display: none">
+            <div class="form">
+                <div class="input-item">
+                    <label>请选择答案：</label>
+                    <select id="problem">
+                        {volist name="problem" id="vo"}
+                        <option value="{$vo.problem}">{$vo.problem}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>请填写答案：</label>
+                    <input type="text" id="answer" name="answer" placeholder="请填写答案"/>
+                </div>
+                <div class="form-button">
+                    <a href="javascript:ProblemPass({$username})">
+                        <button>确认</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="body" style="display: none">
+            <div class="form">
+                <div class="input-item">
+                    <label>请填写以前使用过的密码：</label>
+                    <input type="text" id="password" name="password" placeholder="请填写以前使用过的密码"/>
+                </div>
+                <div class="input-item">
+                    <label>请填写以昵称：</label>
+                    <input type="text" id="name" name="name" placeholder="请填写以昵称"/>
+                </div>
+                <div class="input-item">
+                    <label>请填写邮箱：</label>
+                    <input type="text" id="email" name="email" placeholder="请填写邮箱"/>
+                </div>
+                <div class="input-item">
+                    <label>请填写手机号：</label>
+                    <input type="text" id="number" name="number" placeholder="请填写手机号"/>
+                </div>
+                <div class="form-button">
+                    <a href="javascript:addAppeal({$username})">
+                        <button>确认</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="body" style="display: none">
+            <div class="form">
+                <div class="input-item">
+                    <label>请选择答案：</label>
+                    <select id="problem">
+                        {volist name="problem" id="vo"}
+                        <option value="{$vo.problem}">{$vo.problem}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>请填写答案：</label>
+                    <input type="text" id="answer" name="answer" placeholder="请填写答案"/>
+                </div>
+                <div class="form-button">
+                    <a href="javascript:ProblemPass({$username})">
+                        <button>确认</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="body" style="display: none">
+            <div class="form">
+                <div class="input-item">
+                    <label>请选择答案：</label>
+                    <select id="problem">
+                        {volist name="problem" id="vo"}
+                        <option value="{$vo.problem}">{$vo.problem}</option>
+                        {/volist}
+                    </select>
+                </div>
+                <div class="input-item">
+                    <label>请填写答案：</label>
+                    <input type="text" id="answer" name="answer" placeholder="请填写答案"/>
+                </div>
+                <div class="form-button">
+                    <a href="javascript:ProblemPass({$username})">
+                        <button>确认</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

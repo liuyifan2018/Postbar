@@ -1,0 +1,60 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/note/note.js"></script>
+<title>发表新帖 - 创新论坛</title>
+ </head>
+ <body>
+{include file="../application/index/view/template.html" /}
+  <div class="layui-container fly-marginTop"> 
+   <div class="fly-panel" pad20="" style="padding-top: 5px;"> 
+    <div class="layui-form layui-form-pane"> 
+     <div class="layui-tab layui-tab-brief" lay-filter="user"> 
+      <ul class="layui-tab-title"> 
+       <li class="layui-this">发表新帖</li> 
+      </ul> 
+      <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;"> 
+       <div class="layui-tab-item layui-show"> 
+         <div class="layui-row layui-col-space15 layui-form-item"> 
+          <div class="layui-col-md3"> 
+           <label class="layui-form-label">所在专栏</label> 
+           <div class="layui-input-block"> 
+            <select class="diy-select" name="class" id="tion"> 
+                <option></option> 
+                {volist name="arr" id="vo"}
+                    <option value="{$vo.id}">{$vo.tion}</option>
+                {/volist}
+            </select>
+           </div>
+          </div> 
+          <div class="layui-col-md9"> 
+           <label for="L_title" class="layui-form-label">标题</label> 
+           <div class="layui-input-block"> 
+            <input type="text" id="title" name="title" required="" lay-verify="required" autocomplete="off" class="layui-input" /> 
+           </div> 
+          </div> 
+         </div> 
+         <div class="layui-form-item layui-form-text"> 
+          <div class="layui-input-block"> 
+           <textarea id="content" name="content" required="" lay-verify="required" placeholder="详细描述" class="layui-textarea fly-editor" style="height: 260px;"></textarea> 
+          </div> 
+         </div> 
+         <div class="layui-form-item"> 
+          <label for="L_vercode" class="layui-form-label">验证问题</label> 
+          <div class="layui-input-inline"> 
+           <input type="text" id="answer" name="answer" required="" lay-verify="required" autocomplete="off" class="layui-input" /> 
+          </div> 
+          <input type="hidden" id="ploper" value="{$ploper}">
+          <div class="layui-form-mid layui-word-aux">
+                {$one} + {$two} = ?
+            </div>
+         </div> 
+         <div class="layui-form-item"> 
+          <button id="adNote" class="layui-btn" onclick="addNote()">立即发布</button>
+         </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div>
+  </div>
+ </body>
+</html>

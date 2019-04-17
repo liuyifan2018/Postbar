@@ -1,0 +1,84 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!--兼容IE-->
+    <link rel="stylesheet" type="text/css" href="http://localhost/Postbar/public/static/acss/pass/type.css">
+    <script language="javascript" type="text/javascript" src="http://localhost/Postbar/public/static/js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="http://localhost/Postbar/public/static/js/layer/layer.js"></script>
+    <script language="javascript" type="text/javascript" src="http://localhost/Postbar/public/static/ajs/pass/pass.js"></script>
+    <script src="https://ssl.captcha.qq.com/template/TCapIframeApi.js?aid=1600000878&amp;clientype=2&amp;lang=2052&amp;apptype=1"></script>
+    <script type="text/javascript" async="" src="https://captcha.gtimg.com/2/tcaptcha-frame.a01c4ae2.js"></script>
+    <title>找回密码 - 创新论坛</title>
+    <link rel="icon" href="http://localhost/Postbar/public/static/img/logo.png"/>
+<body>
+<link rel="stylesheet" href="http://localhost/Postbar/public/static/acss/pass/pass.css">
+<style>
+    .round{width:413px;overflow:hidden;position:absolute;}
+    .round .r_top,.round .r_bottom{float:left;width:413px;height:5px;overflow:hidden;}
+    .round .r_top{background-position:0px -510px;}
+    .round .r_bottom{background-position:0px -517px;}
+    .round .round_container{float:left;width:403px;padding:0 5px;margin:0px;overflow:hidden;}
+    .round .round_container .r_title{float:left;width:403px;height:30px;line-height:30px;background:#f1f7fc;text-indent:9px;font-size:14px;position:relative;}
+    .round .round_container .r_title a.close,a.close:hover{right:7px;top:6px;}
+    .round .round_container .round_content,.round_content2{float:left;width:385px;min-height:200px;_height:200px;padding:10px 9px;background:#fff;position:relative;}
+    .round .round_container .round_content2{width:403px;padding:0px;}
+    .round .round_container .round_content2 .rc_tabs{display:block;height:27px;padding-left:9px;background:#f1f7fc;border-bottom:1px solid #d9d9d9;}
+    .round .round_container .round_content2 .rc_tabs li{float:left;margin-right:5px;color:#6e6e6e;}
+    .round .round_container .round_content2 .rc_tabs li a{float:left;line-height:27px;padding:0 9px;color:#6e6e6e;text-decoration:none;}
+    .round .round_container .round_content2 .rc_tabs .rc_on{line-height:27px;color:#333;background:#fff;border:1px solid #d9d9d9;cursor:default;border-bottom:none;-webkit-border-top-left-radius:3px;-webkit-border-top-right-radius:3px;-moz-border-radius-topleft:3px;-moz-border-radius-topright:3px;border-top-left-radius:3px;border-top-right-radius:3px;}
+    .round .round_container .round_content .gm{width:168px;height:222px; position:absolute;right:10px;top:15px;}
+    .round .round_container .round_content .survey{font-size:14px;padding:5px 0 5px 30px;}
+    .round .round_container .round_content .survey li{padding:8px 0 0 0;*padding:5px 0 0 0;}
+    .round .round_container .round_content .survey li input{width:15px;margin-right:5px;}
+    .round .round_container .round_info,.round_info1,.round_info2{padding:35px 0 40px 40px;overflow:hidden;}
+    .round .round_container .round_info h3{padding:0 10px 3px 55px;font-size:14px;}
+    .round .round_container .round_info p{padding:0 10px 5px 55px;font-size:12px;line-height:20px;}
+    .round .round_container .round_info ul,.round_info2 ul{padding-left:55px;}
+    .round .round_container .round_info2 ul,.round .round_container .round_info2 p{padding-left:20px;}
+    .round .round_container .round_info li{float:left;width:350px;padding:5px 0 5px 0; display:block;font-size:14px;line-height:16px;*line-height:18px;}
+    .round .round_container .round_info li .remarks{float:left;width:230px;padding:5px 30px 0 24px;font-size:12px;color:#999;display:none;}
+    .round .round_container .round_info li .ri_input{float:left;width:14px;height:14px;margin-right:10px;}
+    .round .round_container .round_info li i{margin:0 8px 0 0;}
+    .round .round_container .round_info1{padding:10px 0 40px 10px;}
+    .round .round_container .round_info2{padding:30px 0 40px 0;}
+    .round .round_button{float:left;width:383px;padding:8px 10px;background:#f9f9f9;}
+    .round .round_button a.button,.round .round_button a.button1{float:right;margin-left:15px;}
+    /*阴影背景*/
+    .login,.accounts_list,.accounts_list li a.a1:hover,.accounts_list li a.a2:hover,.accounts_list li a.a3:hover,.accounts_list li a.a4:hover,.password_list,.accounts_list li a.pw1:hover,.accounts_list li a.pw2:hover,.accounts_list li a.pw3:hover,.accounts_list li a.pw4:hover,.toolbox_list,.toolbox_list li a.t1:hover,.toolbox_list li a.t2:hover,.toolbox_list li a.t3:hover,.toolbox_list li a.t4:hover,.toolbox_list li a.t5:hover,a.title_icon:hover,.ue_warn,.r_top,.r_bottom{}
+    /* CSS Bg */
+    a.close,a.close:hover,a.t_close,a.t_close:hover,a.handheld:hover{background-image:url(/v2/images/bg.png);background-repeat:no-repeat;_background-image:url(/v2/images/ie6_bg.png);background-repeat:no-repeat;}
+</style>
+<div class="common-header">
+    <div class="header-wrap">
+        <div class="header-left">
+            <p id="sub_title" class="page-title">重置密码</p>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div>
+        <div class="section section-subnav">
+        </div>
+        <div class="section section-main">
+            <div class="section_main" id="container"><div class="main_form">
+                <div class="mod-form-block input">
+                    <label>帐号：</label>
+                    <div>
+                        <div class="formblock medium" style="width:264px">
+                            <input type="text" style="width:264px" id="user" placeholder="账号">
+                        </div>
+                        <div class="tips-error-text" style="display:none" id="tipdiv_input_find_qq">
+                            <div>
+                                <span id="error"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="mod-btn blue large" href="javascript:is_user()" id="next_step" style="margin-top:10px"><span>确定</span></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="footer_new"></div>
+</body>
+</html>

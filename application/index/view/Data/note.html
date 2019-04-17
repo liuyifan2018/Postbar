@@ -1,0 +1,148 @@
+{include file="../application/index/view/header.html" /}
+<title>{$title} - 创新论坛</title>
+<script src="http://localhost/Postbar/public/static/js/data/data.js"></script>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_uc">
+            <ul class="layui-tab-title" id="LAY_mine">
+                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">我发的帖</a></li>{else/}<li><a href="?tion=1">我发的帖</a></li>{/if}
+                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">我收藏的帖</a></li>{else/}<li><a href="?tion=2">我收藏的帖</a></li>{/if}
+            </ul>
+            <div class="layui-tab-content" id="LAY_ucm" style="padding: 5px 0;">
+                {if condition="$tion eq 1"}
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="LAY_mySendCard"></table>
+                    <div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-1" lay-id="LAY_mySendCard" style=" ">
+                        <div class="layui-table-box">
+                            <div class="layui-table-header">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="title" data-key="1-0-0" data-minwidth="300" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>帖子标题</span>
+                                            </div></th>
+                                        <th data-field="status" data-key="1-0-1" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4" align="center">
+                                                <span>状态</span>
+                                            </div></th>
+                                        <th data-field="time" data-key="1-0-3" class="">
+                                            <div class="layui-table-cell laytable-cell-1-0-4" align="center">
+                                                <span>发表时间</span>
+                                            </div></th>
+                                        <th data-field="4" data-key="1-0-4" class=" layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>数据</span>
+                                            </div></th>
+                                        <th data-field="5" data-key="1-0-5" class=" layui-table-col-special">
+                                            <div class="layui-table-cell laytable-cell-1-0-4">
+                                                <span>操作</span>
+                                            </div></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="layui-table-body layui-table-main">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <tbody>
+                                    {volist name="note.note" id="vo"}
+                                        <tr data-index="0" class="">
+                                            <td data-field="title" data-key="1-0-0" data-content="{$vo.title}" data-minwidth="300" class="">
+                                                <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    <a href="{:url('Note/note')}?id={$vo.id}" target="_blank" class="layui-table-link">{$vo.title}</a>
+                                                </div></td>
+                                            <td data-field="status" data-key="1-0-1" align="center" data-content="0" class="">
+                                                <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    <span style="color: #999;">{if condition="$vo.is_show eq 1"}下架
+                                                        {else/}上架
+                                                        {/if}</span>
+                                                </div></td>
+                                            <td data-field="time" data-key="1-0-3" align="center" data-content="1541990727246" class="">
+                                                <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    {$vo.date}
+                                                </div></td>
+                                            <td data-field="4" data-key="1-0-4" data-content="" class="layui-table-col-special">
+                                                <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    <span style="font-size: 12px;">{$vo.num}阅/{$vo.count}答</span>
+                                                </div></td>
+                                            <td data-field="5" data-key="1-0-5" data-content="" class="layui-table-col-special">
+                                                <div class="layui-table-cell laytable-cell-1-0-4">
+                                                    {if condition="$vo.is_show eq 1"}
+                                                    <a class="layui-btn layui-btn-xs success" href="javascript:is_show({$vo.id},2)" target="_blank">
+                                                        上架中
+                                                    </a>
+                                                    {/if}
+                                                    {if condition="$vo.is_show eq 2"}
+                                                    <a class="layui-btn layui-btn-xs defult" href="javascript:is_show({$vo.id},1)" target="_blank">
+                                                        已下架
+                                                    </a>
+                                                    {/if}
+                                            </div></td>
+                                        </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <style>.laytable-cell-1-0-4{ width: 183px; }</style>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 2"}
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="LAY_myCollectioncard"></table>
+                    <div class="layui-form layui-border-box layui-table-view" lay-filter="LAY-table-4" lay-id="LAY_myCollectioncard" style=" ">
+                        <div class="layui-table-box">
+                            <div class="layui-table-header">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <thead>
+                                    <tr>
+                                        <th data-field="title" data-key="4-0-0" data-minwidth="300" class="">
+                                            <div class="layui-table-cell laytable-cell-4-0-0">
+                                                <span>帖子标题</span>
+                                            </div></th>
+                                        <th data-field="collection_timestamp" data-key="4-0-1" class="">
+                                            <div class="layui-table-cell laytable-cell-4-0-0" align="center">
+                                                <span>收藏时间</span>
+                                            </div></th>
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="layui-table-body layui-table-main">
+                                <table cellspacing="0" cellpadding="0" border="0" class="layui-table" lay-skin="line">
+                                    <tbody>
+                                    {volist name="note.coll" id="vo"}
+                                    <tr data-index="0">
+                                        <td data-field="title" data-key="4-0-1" data-minwidth="300" class="">
+                                            <div class="layui-table-cell laytable-cell-4-0-0">
+                                                <a href="{:url('Note/note')}?id={$vo.nid}" target="_blank" class="layui-table-link">{$vo.title}</a>
+                                            </div></td>
+                                        <td data-field="collection_timestamp" data-key="4-0-0" align="center" class="">
+                                            <div class="layui-table-cell laytable-cell-4-0-0">
+                                                {:date('Y-m-d H:i:s',$vo.date)}
+                                            </div></td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <style>.laytable-cell-4-0-0{ width: 460px; }</style>
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,103 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/report/report.js"></script>
+<title>用户管理</title>
+<link rel="stylesheet" href="http://demo.h-ui.net/H-ui.admin/3.1/lib/layer/2.4/skin/layer.css" id="layui_layer_skinlayercss" style=""><link href="lib/My97DatePicker/4.8/skin/WdatePicker.css" rel="stylesheet" type="text/css"></head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont"></i> 首页 <span class="c-gray en">&gt;</span> 帖子管理 <span class="c-gray en">&gt;</span> 我的帖子 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont"></i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont"></i> 批量删除</a> </span> <span class="r">共有数据：<strong>{$report.count}</strong> 条</span> </div>
+    <div class="mt-20">
+        {if condition="$tion eq 1"}
+        <div class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID</th><th width="100" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: 升序排列" style="width: 100px;">举报原因</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">举报用户</th><th width="150" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="邮箱: 升序排列" style="width: 150px;">被举报用户</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">举报帖子</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">状态</th><th width="100" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 100px;">操作</th></tr>
+            </thead>
+            <tbody>
+            {volist name="report.items" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value="1"></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td><u style="cursor:pointer" class="text-primary">{$vo.report}</u></td>
+                <td>{$vo.username}</td>
+                <td>{$vo.notename}</td>
+                <td>{$vo.title}</td>
+                <td class="td-status">
+                    {if condition="$vo.type eq 1"}<span class="label label-success radius">待审核</span>{/if}
+                    {if condition="$vo.type eq 2"}<span class="label label-danger radius">已拒绝</span>{/if}
+                    {if condition="$vo.type eq 3"}<span class="label label-success radius">已通过</span>{/if}
+                </td>
+                <td class="td-manage">
+                    <a href="javascript:is_report(3,{$vo.nid},{$vo.id})"><span class="label label-success radius">通过</span></a>
+                    <a href="javascript:is_report(2,{$vo.nid},{$vo.id})"><span class="label label-danger radius">拒绝</span></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+            <div class="pagination">
+                {$page|raw}
+            </div>
+        </div>
+        {/if}
+
+        {if condition="$tion eq 2"}
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID</th><th width="100" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: 升序排列" style="width: 100px;">举报原因</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">举报用户</th><th width="150" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="邮箱: 升序排列" style="width: 150px;">被举报用户</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">举报帖子</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">状态</th><th width="100" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 100px;">操作</th></tr>
+            </thead>
+            <tbody>
+            {volist name="report.data" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value="1" name=""></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td><u style="cursor:pointer" class="text-primary">{$vo.report}</u></td>
+                <td>{$vo.username}</td>
+                <td>{$vo.notename}</td>
+                <td>{$vo.title}</td>
+                <td class="td-status">
+                    {if condition="$vo.type eq 1"}<span class="label label-success radius">待审核</span>{/if}
+                    {if condition="$vo.type eq 2"}<span class="label label-danger radius">已拒绝</span>{/if}
+                    {if condition="$vo.type eq 3"}<span class="label label-success radius">已通过</span>{/if}
+                </td>
+                <td class="td-manage">
+                    <a href="javascript:is_report(3,{$vo.nid},{$vo.id})"><span class="label label-success radius">通过</span></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+        {/if}
+
+        {if condition="$tion eq 3"}
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID</th><th width="100" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: 升序排列" style="width: 100px;">举报原因</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">举报用户</th><th width="150" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="邮箱: 升序排列" style="width: 150px;">被举报用户</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">举报帖子</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">状态</th><th width="100" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 100px;">操作</th></tr>
+            </thead>
+            <tbody>
+            {volist name="report.items" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value="1" name=""></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td><u style="cursor:pointer" class="text-primary">{$vo.report}</u></td>
+                <td>{$vo.username}</td>
+                <td>{$vo.notename}</td>
+                <td>{$vo.title}</td>
+                <td class="td-status">
+                    {if condition="$vo.type eq 1"}<span class="label label-success radius">待审核</span>{/if}
+                    {if condition="$vo.type eq 2"}<span class="label label-danger radius">已拒绝</span>{/if}
+                    {if condition="$vo.type eq 3"}<span class="label label-success radius">已通过</span>{/if}
+                </td>
+                <td class="td-manage">
+                    <a href="javascript:is_report(2,{$vo.nid},{$vo.id})"><span class="label label-danger radius">拒绝</span></a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+        </div>
+        {/if}
+    </div>
+</div>
+
+</body></html>

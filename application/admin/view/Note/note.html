@@ -1,0 +1,155 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/note/note.js"></script>
+</head>
+<body>
+<nav class="breadcrumb">
+    <i class="Hui-iconfont"></i>
+    首页
+    <span class="c-gray en">&gt;</span>
+    资讯管理
+    <span class="c-gray en">&gt;</span>
+    资讯列表
+    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新">
+        <i class="Hui-iconfo/nt"></i>
+    </a>
+</nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+        <span class="l">
+            <a href="javascript:;" onclick="deleteAll()" class="btn btn-danger radius"><i class="Hui-iconfont"></i> 批量删除</a>
+            <a class="btn btn-primary radius" data-title="添加资讯" data-href="article-add.html" onclick="Hui_admin_tab(this)" href="javascript:;">
+            <i class="Hui-iconfont"></i> 添加资讯</a></span> <span class="r">共有数据：<strong>{$noteList.count}</strong> 条
+        </span>
+    </div>
+    <div class="mt-20">
+        {if condition="$tion eq 2"}
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-bg table-hover table-sort table-responsive dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row">
+                <th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 586px;"><input type="checkbox" name="btSelectAll"> 全选</th>
+                <th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 586px;">ID</th>
+                <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="标题: 升序排列" style="width: 586px;">标题</th>
+                <th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="分类: 升序排列" style="width: 586px;">分类</th>
+                <th width="120" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="更新时间: 升序排列" style="width: 586px;">发布时间</th>
+                <th width="75" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="浏览次数: 升序排列" style="width: 586px;">浏览次数</th>
+                <th width="60" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="发布状态: 升序排列" style="width: 586px;">发布状态</th>
+                <th width="120" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 586px;">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {volist name="noteList.items" id="vo"}
+                <tr class="text-c odd" role="row">
+                    <td><input type="checkbox" value="{$vo.id}" class="orders" name="btSelectAll[]"></td>
+                    <td class="sorting_1">{$vo.id}</td>
+                    <td class="text-l"><u style="cursor:pointer" class="text-primary" title="查看">{$vo.title}</u></td>
+                    <td>{$vo.tion}</td>
+                    <td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
+                    <td>{$vo.num}</td>
+                    <td class="td-status">
+                        {if condition="$vo.state eq 2"}<span class="label label-default radius">待审核</span>{/if}
+                        {if condition="$vo.state eq 1"}<span class="label label-success radius">已通过</span>{/if}
+                        {if condition="$vo.state eq 3"}<span class="label label-danger radius">已拒绝</span>{/if}
+                    </td>
+                    <td class="td-manage">
+                        <a href="javascript:is_Note(1,{$vo.id})"><span class="label label-success radius">通过</span></a>
+                        <a href="javascript:is_Note(3,{$vo.id})"><span class="label label-danger radius">拒绝</span></a>
+                    </td>
+                </tr>
+            {/volist}
+            </tbody>
+        </table>
+            <div class="pagination">
+                {$page|raw}
+            </div>
+        </div>
+        {/if}
+        {if condition="$tion eq 3"}
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-bg table-hover table-sort table-responsive dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 586px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 586px;">ID</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="标题: 升序排列" style="width: 586px;">标题</th><th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="分类: 升序排列" style="width: 586px;">分类</th><th width="120" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="更新时间: 升序排列" style="width: 586px;">发布时间</th><th width="75" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="浏览次数: 升序排列" style="width: 586px;">浏览次数</th><th width="60" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="发布状态: 升序排列" style="width: 586px;">发布状态</th></tr>
+            </thead>
+            <tbody>
+            {volist name="noteList.items" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value=""></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td class="text-l"><u style="cursor:pointer" class="text-primary" title="查看">{$vo.title}</u></td>
+                <td>{$vo.tion}</td>
+                <td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
+                <td>{$vo.num}</td>
+                <td class="td-status">
+                    <span class="label label-danger radius">已拒绝</span>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+            <div class="pagination">
+                {$page|raw}
+            </div>
+        </div>
+        {/if}
+        {if condition="$tion eq 1"}
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-bg table-hover table-sort table-responsive dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 586px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 586px;">ID</th><th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="标题: 升序排列" style="width: 586px;">标题</th><th width="80" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="分类: 升序排列" style="width: 586px;">分类</th><th width="120" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="更新时间: 升序排列" style="width: 586px;">发布时间</th><th width="75" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="浏览次数: 升序排列" style="width: 586px;">浏览次数</th><th width="60" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="发布状态: 升序排列" style="width: 586px;">发布状态</th></tr>
+            </thead>
+            <tbody>
+            {volist name="noteList.items" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value="" name=""></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td class="text-l"><u style="cursor:pointer" class="text-primary" title="查看">{$vo.title}</u></td>
+                <td>{$vo.tion}</td>
+                <td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
+                <td>{$vo.num}</td>
+                <td class="td-status">
+                    <span class="label label-success radius">已通过</span>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+            <div class="pagination">
+                {$page|raw}
+            </div>
+        </div>
+        {/if}
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    /**
+     * 批量删除
+     **/
+    function deleteAll() {
+        var data = new Array();
+        $.each($(".orders:checked"),function(index,el){
+            data.push($(el).val());
+        });
+        if(data.length<=0){
+            layer.msg("请选择删除的帖子!");
+            return;
+        }
+        $.ajax({
+            type: "GET",
+            url: "{:url('Note/deleteAll')}",
+            async: false,
+            data:{o_data:JSON.stringify(data)},
+            dataType: "json",
+            success: function(data){
+                if(data.code == 0){
+                    layer.msg(data.info);
+                }else if (data.code == 1){
+                    layer.msg(data.info);
+                    setTimeout("location.reload()",1200);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log(errorThrown)
+            }
+        });
+    }
+</script>

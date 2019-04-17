@@ -1,0 +1,77 @@
+{include file="../application/index/view/header.html" /}
+<link rel="stylesheet" href="http://localhost/Postbar/public/static/acss/message/message.css"/>
+<script src="http://localhost/Postbar/public/static/js/message/message.js"></script>
+<title>{$title} - 创新论坛</title>
+<style>
+    table{
+        margin:10px;
+    }
+    table ul{
+        padding: 10px 10px;
+    }
+</style>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                <li><a href="{:url('Friend/index')}?tion=1">我的好友</a></li>
+                <li><a href="{:url('Friend/index')}?tion=2">搜索好友</a></li>
+                <li><a href="{:url('Friend/index')}?tion=3">黑名单</a></li>
+                <li class="layui-this"><a href="#">消息列表</a></li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                <div class="qqBox">
+                    <div class="BoxHead">
+                        <div class="headImg">
+                            <img src="http://localhost/Postbar/uploads/{$friend.img}">
+                        </div>
+                    </div>
+                    <div class="context">
+                        <div class="conRight">
+                            <div class="Righthead">
+                                <div class="headName">{$friend.name}</div>
+                            </div>
+                            <div class="RightCont">
+                                <ul class="newsList">
+                                    {volist name="message" id="vo"}
+                                        {if condition="$data.username neq $vo.username"}
+                                            <li>
+                                                <div class="nesHead"><img src="http://localhost/Postbar/uploads/{$vo.friimg}"></div>
+                                                <div class="news">{$vo.message}</div>
+                                            </li>
+                                        {/if}
+                                        {if condition="$data.username eq $vo.username"}
+                                            <li>
+                                                <div class="answerHead"><img src="http://localhost/Postbar/uploads/{$vo.userimg}"></div>
+                                                <div class="answers">{$vo.message}</div>
+                                            </li>
+                                        {/if}
+                                    {/volist}
+                                </ul>
+                            </div>
+                            <div class="RightFoot">
+                                <div class="inputBox">
+                                    <textarea id="message" style="width: 99%;height: 75px;border: none;outline: none;resize: none" name=""></textarea>
+                                    <a href="javascript:Postmsg({$data.username},{$friend.username})">
+                                        <button class="sendBtn">发送(s)</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

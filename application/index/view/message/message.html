@@ -1,0 +1,153 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/message/message.js"></script>
+<title>{$title} - Fly社区</title>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">好友验证</a></li>{else/}<li><a href="?tion=1">好友验证</a></li>{/if}
+                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">会员消息</a></li>{else/}<li><a href="?tion=2">会员信息</a></li>{/if}
+                {if condition="$tion eq 3"}<li class="layui-this"><a href="?tion=3">帖子消息</a></li>{else/}<li><a href="?tion=3">帖子消息</a></li>{/if}
+                {if condition="$tion eq 4"}<li class="layui-this"><a href="?tion=4">回复信息</a></li>{else/}<li><a href="?tion=4">回复信息</a></li>{/if}
+            </ul>
+            {if condition="$tion eq 1"}
+            <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">
+                {if condition="$message.fsg eq null"}
+                <div class="layui-tab layui-tab-brief" lay-filter="user" style="margin-top: 15px;">
+                    <div style="margin-top: 10px;">
+                        <div class="fly-none">您暂时没有最新消息</div>
+                    </div>
+                </div>
+                {else/}
+                <button class="layui-btn layui-btn-danger" id="LAY_delallmsg">清空全部消息</button>
+                <div id="LAY_minemsg" style="margin-top: 10px;">
+                    <ul class="mine-msg">
+                        {volist name="message.fsg" id="vo"}
+                        <li data-id="160921">
+                            <blockquote class="layui-elem-quote">
+                                <a href="{:url('Data/user')}?username={$vo.username}" target="_blank"><cite>{$vo.name}</cite></a>请求加为好友
+                            </blockquote>
+                            <p>
+                                <span>{:date('Y-m-d H:i:s',$vo.date)}</span>
+                                {if condition="$vo.type eq 0"}
+                                <a href="javascript:is_friend(1,{$vo.username});" class="layui-btn layui-btn-sm layui-btn-normal fly-delete">同意</a>
+                                <a href="javascript:is_friend(2,{$vo.username});" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">拒绝</a>
+                                <a href="javascript:is_friend(3,{$vo.username});" class="layui-btn layui-btn-sm layui-btn-warm fly-delete">忽略</a>
+                                {/if}
+                                {if condition="$vo.is_fd neq 0"}
+                                    <a href="javascript:;" class="layui-btn layui-btn-sm {if condition='$vo.type eq 2'}layui-btn-danger{else/}layui-btn-warm{/if} fly-delete">
+                                        {if condition="$vo.type eq 3"}
+                                            已忽略
+                                        {/if}
+                                        {if condition="$vo.type eq 2"}
+                                            已拒绝
+                                        {/if}
+                                    </a>
+                                {/if}
+                            </p>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                {/if}
+            </div>
+            {/if}
+            {if condition="$tion eq 2"}
+            <div style="margin-top: 10px;">
+            {if condition="$data.insider eq null"}
+            <div class="layui-tab layui-tab-brief" lay-filter="user" style="margin-top: 15px;">
+                <div style="margin-top: 10px;">
+                    <div class="fly-none">您暂时没有最新消息</div>
+                </div>
+            </div>
+            {else/}
+            <a href="javascript:delallmsg()">
+                <button class="layui-btn layui-btn-danger" style="margin-top: 15px;">清空全部消息</button>
+            </a>
+            <div style="margin-top: 10px;">
+                <ul class="mine-msg">
+                    <li data-id="314097">
+                        <blockquote class="layui-elem-quote">
+                            <a href="{:url('Data/user')}?username={$data.username}" target="_blank"><cite>您</cite></a>在官网续费了一个月的
+                            <a href="{:url('Data/recharge')}?tion=1">
+                                <cite>{$data.insider}</cite>
+                            </a>
+                        </blockquote>
+                    </li>
+                </ul>
+            </div>
+            {/if}
+            </div>
+            {/if}
+            {if condition="$tion eq 3"}
+            <div style="margin-top: 10px;">
+                {if condition="$message.csg eq null"}
+                <div class="layui-tab layui-tab-brief" lay-filter="user" style="margin-top: 15px;">
+                    <div style="margin-top: 10px;">
+                        <div class="fly-none">您暂时没有最新消息</div>
+                    </div>
+                </div>
+                {else/}
+                <a href="javascript:delallmsg({$data.username})">
+                    <button class="layui-btn layui-btn-danger" style="margin-top: 15px;">清空全部消息</button>
+                </a>
+                <ul class="mine-msg">
+                    {volist name="message.csg" id="vo"}
+                    <li data-id="314097">
+                        <blockquote class="layui-elem-quote">
+                            <a href="{:url('Data/user')}?username={$vo.username}" target="_blank"><cite>{$vo.name}</cite></a>评论了您的帖子
+                            <a target="_blank" href="{:url('Note/note')}?id={$vo.nid}">
+                                <cite>{$vo.title}</cite>
+                            </a>
+                        </blockquote>
+                        <p><span>2019-01-04 10:49:30</span>
+                            <a href="javascript:deleteCon({$vo.id})" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">删除</a>
+                        </p>
+                    </li>
+                    {/volist}
+                </ul>
+                {/if}
+            </div>
+            {/if}
+            {if condition="$tion eq 4"}
+            <div class="layui-tab layui-tab-brief" lay-filter="user" style="margin-top: 15px;">
+                {if condition="$message.rsg eq null" id="vo"}
+                <div class="layui-tab layui-tab-brief" lay-filter="user" style="margin-top: 15px;">
+                    <div style="margin-top: 10px;">
+                        <div class="fly-none">您暂时没有最新消息</div>
+                    </div>
+                </div>
+                {else/}
+                <button class="layui-btn layui-btn-danger">清空全部消息</button>
+                <div style="margin-top: 10px;">
+                    <ul class="mine-msg">
+                        {volist name="message.rsg" id="vo"}
+                        <li data-id="160921">
+                            <blockquote class="layui-elem-quote">
+                                <a href="{:url('Data/user')}?username={$vo.username}" target="_blank"><cite>{$vo.name}</cite></a>
+                                {if condition="$vo.type eq 1"}
+                                    已同意你的请求
+                                {else/}
+                                    已拒绝你的请求
+                                {/if}
+                            </blockquote>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+                {/if}
+            </div>
+            {/if}
+        </div>
+    </div>
+</div>
+</body>
+</html>

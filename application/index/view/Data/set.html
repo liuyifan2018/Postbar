@@ -1,0 +1,108 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/data/data.js"></script>
+<title>{$title} - 创新论坛</title>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">我的资料</a></li>{else/}<li><a href="?tion=1">我的资料</a></li>{/if}
+                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">头像</a></li>{else/}<li><a href="?tion=2">头像</a></li>{/if}
+                {if condition="$tion eq 3"}<li class="layui-this"><a href="?tion=3">密码</a></li>{else/}<li><a href="?tion=3">密码</a></li>{/if}
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                {if condition="$tion eq 1"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">手机</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_phone" name="phone" required="" lay-verify="phone" autocomplete="off" value="{$data.number}" class="layui-input" disabled="" style="cursor: not-allowed !important;" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span style="color: #5FB878">您已完成手机号绑定，已正式成为社区实名用户。</span> 手机号不支持修改。
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_email" name="email" required="" lay-verify="email" autocomplete="off" value="{$data.email}" class="layui-input" disabled="" style="cursor: not-allowed !important;" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span style="color: #5FB878">您的邮箱已激活，可进行发帖等操作。</span> 邮箱不支持修改。
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="L_username" class="layui-form-label">昵称</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="name" name="name" required="" lay-verify="required" autocomplete="off" value="{$data.name}" class="layui-input" />
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label for="L_city" class="layui-form-label">城市</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="city" name="city" autocomplete="off" value="{$data.city}" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item layui-form-text">
+                        <label for="L_sign" class="layui-form-label">签名</label>
+                        <div class="layui-input-block">
+                            <textarea placeholder="随便写些什么刷下存在感" id="auto" name="auto" autocomplete="off" class="layui-textarea" style="height: 80px;">{$data.auto}</textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="update()">确认修改</button>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 2"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <div class="avatar-add">
+                            <p>建议尺寸168*168，支持jpg、png、gif，最大不能超过50KB</p>
+                            <form action="{:url('Data/upImage')}" enctype="multipart/form-data" method="post">
+                                <input class="layui-upload-file" type="file" accept="undefined" value="11" name="image" />
+                                <input type="hidden" value="{$data.id}" name="uid">
+                                <button type="submit" class="layui-btn upload-img">上传头像 </button>
+                                <img src="http://localhost/Postbar/uploads/{$data.img}" />
+                                <span class="loading"></span>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 3"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_pass" class="layui-form-label">新密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="pass" name="pass" required="" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            6到16个字符
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="L_repass" class="layui-form-label">确认密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="repass" name="repass" required="" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="upPass()">确认修改</button>
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

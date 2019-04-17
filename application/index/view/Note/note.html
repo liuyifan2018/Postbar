@@ -1,0 +1,132 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/note/note.js"></script>
+<title>{$note.title} - 创新论坛</title>
+<body>
+{include file="../application/index/view/template.html" /}
+<div id="Report" style="background: rgba(1,1,1,0.5);width: 100vw;height: 100vh;position: fixed;z-index: 999;display: none">
+    <div style="width: 30%;height: 40%;background: white;margin: 200px auto;border-radius: 3px">
+        <a href="javascript:getReport()" style="float:right;padding: 20px 20px;font-size:18px;font-weight: 700;color:#5e4505;clear:both">x</a>
+            <textarea id="port" placeholder="请输入你的意见..." style="width: 80%;height: 40%;padding: 10px;margin: 30px;resize: none;"></textarea>
+            <a href="javascript:Report({$data.username},{$note.username},{$note.id})">
+            <button style="width: 60px;height: 28px;background: #00a4a2;border: 1px solid #00a4a2;border-radius: 3px;margin: 0px 50px;">提交</button>
+        </a>
+    </div>
+</div>
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8 content detail">
+            <div class="fly-panel detail-box" style="margin-top: 100px">
+                <h1>{$note.title}</h1>
+                <div class="fly-detail-info">
+                    <span class="layui-badge layui-bg-green fly-detail-column"> {$note.tion} </span>
+                    <span class="fly-list-nums"> <a href="#comment"><i class="iconfont" title="回答"></i> {$note.count}</a> <i class="iconfont" title="人气"></i> {$note.num} </span>
+                    <a href="javascript:setReport()">
+                        <span class="fly-list-nums" style="margin-top: -50px;color: #ff4a35"> 举报 </span>
+                    </a>
+                </div>
+                <div class="detail-about">
+                    <a class="fly-avatar" href="{:url('Data/user')}?username={$note.username}"> <img src="http://localhost/Postbar/uploads/{$note.user['img']}" alt="{$note.user['name']}" /> </a>
+                    <div class="fly-detail-user">
+                        <a href="{:url('Data/user')}?username={$note.username}" class="fly-link"> <cite>{$note.user['name']}</cite> </a>
+                        <span>{:date('Y-m-d H:i:s',$note['date'])}</span>
+                    </div>
+                    <div class="detail-hits" id="LAY_jieAdmin" data-id="50200">
+                        {if condition="$note.coll eq null"}
+                        <a href="javascript:collTion({$note.id},1)">
+                            <span class="layui-btn layui-btn-xs jie-admin " type="collect" data-type="add">收藏</span>
+                        </a>
+                        {else/}
+                        <a href="javascript:collTion({$note.id},2)">
+                            <span class="layui-btn layui-btn-xs jie-admin " type="collect" data-type="add">取消收藏</span>
+                        </a>
+                        {/if}
+                    </div>
+                </div>
+                <div class="detail-body layui-text photos">
+                    {$note.content}
+                    <a href="javascript:good({$note.id},{$data.username})" style="float: right;margin-top:45%;">
+                        <i class="iconfont icon-zan" title="点赞"> <span>{$note.good}</span></i>
+                    </a>
+                </div>
+            </div>
+            <div class="fly-panel detail-box" id="flyReply">
+                <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+                    <legend>回帖</legend>
+                </fieldset>
+                <ul class="jieda" id="jieda">
+                    {volist name="note.comment" id="vo"}
+                    <li data-id="171108"> <a name="item-1553682902079"></a>
+                        <div class="detail-about detail-about-reply">
+                            <a class="fly-avatar" href="{:url('Data/user')}?username={$vo.username}"> <img src="http://localhost/Postbar/uploads/{$vo.img}" alt="{$vo.name}" /> </a>
+                            <div class="fly-detail-user">
+                                <a href="{:url('Data/user')}?username={$vo.username}" class="fly-link"> <cite>{$vo.name}</cite> <i class="layui-badge fly-badge-vip">{$vo.insider}</i> </a>
+                            </div>
+                            <div class="detail-hits">
+                                <span>{:date('Y-m-d H:i:s',$vo['date'])}</span>
+                            </div>
+                        </div>
+                        <div class="detail-body layui-text jieda-body photos">
+                            {$vo.content}
+                        </div></li>
+                    {/volist}
+                </ul>
+                <div style="text-align: center">
+                </div>
+                <a name="comment"> </a>
+                <div class="layui-form layui-form-pane">
+                    <div class="layui-form-item layui-form-text">
+                        <div class="layui-input-block">
+                            <div class="layui-unselect fly-edit">
+                                <span type="face" title="表情"><i class="iconfont icon-yxj-expression" style="top: 1px;"></i></span>
+                                <span type="picture" title="图片：img[src]"><i class="iconfont icon-tupian"></i></span>
+                                <span type="href" title="超链接格式：a(href)[text]"><i class="iconfont icon-lianjie"></i></span>
+                                <span type="quote" title="引用"><i class="iconfont icon-yinyong" style="top: 1px;"></i></span>
+                                <span type="code" title="插入代码" class="layui-hide-xs"><i class="iconfont icon-emwdaima" style="top: 1px;"></i></span>
+                                <span type="hr" title="水平线">hr</span>
+                                <span type="preview" title="预览"><i class="iconfont icon-yulan1"></i></span>
+                            </div>
+                            <textarea id="content" name="content" required="" placeholder="请输入内容" class="layui-textarea fly-editor" style="height: 150px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <a href="javascript:content({$note.id})">
+                            <button class="layui-btn">提交回复</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4" style="margin-top: 100px">
+            <dl class="fly-panel fly-list-one">
+                <dt class="fly-panel-title">
+                    本周热议
+                </dt>
+                {volist name="note.hot" id="vo"}
+                    <dd>
+                        <a href="{:url('Note/note')}?id={$vo.id}">{$vo.title}</a>
+                        <span style="color: black">{$vo.num}🔥</span>
+                    </dd>
+                {/volist}
+            </dl>
+            <div class="fly-panel">
+                <div class="fly-panel-title">
+                    心级赞助商
+                    <span style="padding: 0 3px;">-</span>
+                    <a href="/jie/15697/" class="fly-link fly-joinad">我要加入</a>
+                </div>
+                <div class="fly-panel-main">
+                    <a href="https://e.coding.net/?utm_source=layui" target="_blank" rel="nofollow" class="fly-zanzhu fly-zanzhu-img" time-limit="2019-04-15 0:0:0" style="background: none;"> <img src="//cdn.layui.com/upload/2019_3/168_1552461560911_57465.jpg" alt="CODING" /> </a>
+                    <a href="https://enhancer.io" target="_blank" rel="nofollow" class="fly-zanzhu fly-zanzhu-img" time-limit="2018-04-01 0:0:0"> <img src="//cdn.layui.com/upload/2019_3/168_1553582686910_20042.png" alt="enhancer" /> </a>
+                    <a href="https://www.renren.io/layui" target="_blank" rel="nofollow" class="fly-zanzhu" style="background-color: #4BAE4F;" time-limit="2019-09-08 0:0:0"> 人人开源 - 企业级后台脚手架框架 </a>
+                    <a href="https://www.gemframe.cn?hmsr=layui&amp;hmpl=&amp;hmcu=&amp;hmkw=&amp;hmci=" target="_blank" rel="nofollow" class="fly-zanzhu" style="background-color: #000000; font-size: 14px;" time-limit="2019-04-07 0:0:0"> GemFrame 微服务后台管理系统，永久开源免费下载 </a>
+                    <a href="http://kaoshi.gongjiangwangluo.com/" target="_blank" rel="nofollow" class="fly-zanzhu fly-zanzhu-img" time-limit="2018-04-12 0:0:0" style="background: none;"> <img src="//cdn.layui.com/upload/2019_3/168_1552034868264_85014.jpg" alt="tp-shop" /> </a>
+                    <a href="http://www.h5ds.com/" target="_blank" rel="nofollow" class="fly-zanzhu" style="background-color: #563761;" time-limit="2019-04-15 0:0:0"> H5 制作神器，可导出 HTML 代码 </a>
+                    <a href="http://www.mainwww.com/" target="_blank" rel="nofollow" class="fly-zanzhu" style="background-color: #FF5722;" time-limit="2019-04-15 0:0:0"> 码英自助建站，只需 5 分钟 </a>
+                    <a href="https://www.chanmir.com/server/buy.html" target="_blank" rel="nofollow" class="fly-zanzhu" style="background-color: #192933;" time-limit="2019-04-19 0:0:0"> 千铭高防云 BGP 服务器 &middot; 14元起 </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

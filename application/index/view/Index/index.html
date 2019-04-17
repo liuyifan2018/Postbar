@@ -1,0 +1,97 @@
+{include file="../application/index/view/header.html" /}
+<link rel="stylesheet" href="http://localhost/Postbar/public/static/css/page.css"/>
+<title>创新论坛</title>
+<style>
+    marquee{
+        line-height: 60px;
+    }
+    marquee cite{
+        color: #ff5973;
+    }
+</style>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="indexMain">
+    <div class="indexMain_left">
+        <div class="indexMain_left_btn">
+            <marquee>
+                <cite>今日热门：{$note.today['title']}</cite>
+            </marquee>
+        </div>
+        <div class="indexMain_left_btn">
+            <ul>
+                {if condition='$tion == "hot"'}
+                    <li><a href="?tion=hot" class="on">最热</a></li>
+                {else/}
+                    <li><a href="?tion=hot">最热</a></li>
+                {/if}
+                {if condition='$tion == "new"'}
+                    <li><a href="?tion=new" class="on">最新</a></li>
+                {else/}
+                    <li><a href="?tion=new">最新</a></li>
+                {/if}
+            </ul>
+        </div>
+        <div class="indexMain_left_con">
+            {volist name="note.items" id="vo"}
+                <div class="indexCon_msg">
+                    <div class="indexCon_msg_pic">
+                        <img src="http://localhost/Postbar/public/static/img/logo.png">
+                    </div>
+                    <div class="indexCon_msg_detail">
+                        <div class="indexCon_msg_detail_tittle">
+                            <span>{$vo.tion}</span>
+                            <a href="{:url('Note/note')}?id={$vo.id}">
+                                <p>{$vo.title}</p>
+                            </a>
+                        </div>
+                        <div class="indexCon_msg_detail_other">
+                            <ul>
+                                <li>{$vo.name}</li>
+                                <li>{:date('Y-m-d H:i:s',$vo['date'])}</li>
+                                <li>21</li>
+                                <li><i class="iconfont icon-liulanyanjing" title="人气"></i> {$vo.num} </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            {/volist}
+        </div>
+        <div class="pagination">
+            {$page|raw}
+        </div>
+    </div>
+    <div class="indexMain_right">
+        <div class="indexMain_rightCon">
+            <a href="{:url('Note/addNote')}" class="newMsg">发新帖</a>
+            <div class="indexSearch">
+                <form method="post" action="">
+                    <input type="text" placeholder="请输入关键词" name="title"/>
+                    <input type="submit" value="搜索"/>
+                </form>
+            </div>
+            <div class="indexPublic">
+                <div class="indexPublic_head">
+                    本周热议
+                </div>
+                <div class="indexPublic_con">
+                    <ul class="weekHot">
+                        {volist name="note.hot" id="vo"}
+                            <li><a href="{:url('Note/note')}?id={$vo.id}">{$vo.title}</a><span>{$vo.num}🔥</span></li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+            <div class="indexWxpublic">
+                <p>
+                    <a href="http://localhost/Postbar/public/admin/User/login">进入后台管理</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+</body>
+</html>

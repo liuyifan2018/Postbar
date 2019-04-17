@@ -1,0 +1,28 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/data/data.js"></script>
+</head>
+<body>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>问题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$problem.problem}" placeholder="" id="problem" name="problem">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">答案：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$problem.answer}" placeholder="" id="answer" name="answer">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button onclick="editProblem({$problem.id});" class="btn btn-success radius" type="button">修改</button>
+                <button onclick="window.location.reload()" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

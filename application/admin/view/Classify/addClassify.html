@@ -1,0 +1,22 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/Classify/Classify.js"></script>
+</head>
+<body>
+<div class="page-container">
+    <form class="form form-horizontal" id="form-article-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="tion" name="tion">
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button onclick="addClassify();" class="btn btn-success radius" type="button">添加</button>
+                <button onclick="window.location.reload()" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

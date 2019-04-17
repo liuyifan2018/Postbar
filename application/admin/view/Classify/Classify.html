@@ -1,0 +1,57 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/Classify/Classify.js"></script>
+<title>用户管理</title>
+<link rel="stylesheet" href="http://demo.h-ui.net/H-ui.admin/3.1/lib/layer/2.4/skin/layer.css" id="layui_layer_skinlayercss" style=""><link href="lib/My97DatePicker/4.8/skin/WdatePicker.css" rel="stylesheet" type="text/css"></head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont"></i> 首页 <span class="c-gray en">&gt;</span> 申诉管理 <span class="c-gray en">&gt;</span> 审核申诉 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont"></i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="{:url('Classify/addClassify')}" class="btn btn-primary radius"><i class="Hui-iconfont"></i> 添加分类</a></span>  </div>
+    <div class="cl pd-5 bg-1 bk-gray mt-20"><span class="r">共有数据：<strong>{$Classify.count}</strong> 条</span> </div>
+    <div class="mt-20">
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+            <thead>
+            <tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID</th><th width="100" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: 升序排列" style="width: 100px;">分类名称</th><th width="40" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="性别: 升序排列" style="width: 80px;">用户名</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">添加时间</th><th width="150" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="邮箱: 升序排列" style="width: 150px;">是否显示</th><th width="100" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 100px;">操作</th></tr>
+            </thead>
+            <tbody>
+            {volist name="Classify.data" id="vo"}
+            <tr class="text-c odd" role="row">
+                <td><input type="checkbox" value="1" name=""></td>
+                <td class="sorting_1">{$vo.id}</td>
+                <td><u style="cursor:pointer" class="text-primary">{$vo.tion}</u></td>
+                <td>{$vo.username}</td>
+                <td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
+                <td>
+                    {if condition="$vo.is_show == 2"}
+                    <a style="text-decoration:none" href="javascript:is_show({$vo.id},1,'')">
+                        <span class="label label-danger radius">否</span>
+                    </a>
+                    {else/}
+                    <a style="text-decoration:none" href="javascript:is_show({$vo.id},2,'取消')">
+                        <span class="label label-success radius">是</span>
+                    </a>
+                    {/if}
+                </td>
+                <td class="td-manage">
+                    <a style="text-decoration:none" href="{:url('Classify/editClassify')}?id={$vo.id}">
+                        <span class="label label-success radius">
+                            编辑
+                        </span>
+                    </a>
+                    <a style="text-decoration:none" href="javascript:is_del({$vo.id})">
+                        <span class="label label-danger radius">
+                            删除
+                        </span>
+                    </a>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+        </table>
+            <div class="pagination">
+                {$page|raw}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body></html>

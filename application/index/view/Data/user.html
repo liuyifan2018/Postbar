@@ -1,0 +1,58 @@
+{include file="../application/index/view/header.html" /}
+<title>{$user.user['name']}的主页 - 创新论坛</title>
+</head>
+<body class="fly-full">
+{include file="../application/index/view/template.html" /}
+<div class="fly-home fly-panel">
+    <img src="http://localhost/Postbar/uploads/{$user.user['img']}" alt="http://localhost/Postbar/uploads/{$user.user['name']}" />
+    <h1> {$user.user['name']} </h1>
+    <p class="fly-home-info">
+        <span style="color: #FF7200;">Lv: {$user.user['lv']}级</span>
+        <span>成长值:</span>
+        <span style="color: #FF7200;">{$user.user['exp']}</span>
+        <span>/</span>
+        <span style="color: #009688">{$user.user['target']}</span>
+    </p>
+    <p style="padding: 10px 0; color: #5FB878;">认证信息：2018-2019 年度 创新论坛 “社区之光”</p>
+    <p class="fly-home-info">s
+        <i class="iconfont icon-kiss" title="{$user.user['money']}飞吻"></i><span style="color: #FF7200;">{$user.user['money']}飞吻</span>
+        <i class="iconfont icon-shijian"></i><span>{:date('Y-m-d',$user.user['date'])} 加入</span>
+        <i class="iconfont icon-chengshi"></i><span>来自{$user.user['city']}</span>
+    </p>
+    {if condition="$user.user['auto'] eq null"}<p class="fly-home-sign">（这个人懒得留下签名）</p>{/if}
+    {if condition="$user.user['auto'] neq null"}<p class="fly-home-sign">{$user.user['auto']}</p>{/if}
+</div>
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6 fly-home-jie">
+            <div class="fly-panel">
+                <h3 class="fly-panel-title">11 最近的提问</h3>
+                <ul class="jie-row">
+                    {volist name="user.note" id="vo"}
+                    <li>
+                        {if condition="$vo.num > 100"}<span class="fly-jing layui-hide-xs" title="精贴">精</span>{/if}
+                        <a href="{:url('Note/note')}?id={$vo.id}" class="jie-title">{$vo.title}</a> <i> {:date('Y-m-d H:i:s',$vo.date)}
+                    </i> <em class="layui-hide-xs">{$vo.num}阅/{$vo.count}答</em>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="layui-col-md6 fly-home-da">
+            <div class="fly-panel">
+                <h3 class="fly-panel-title">皇 最近的回答</h3>
+                <ul class="home-jieda">
+                    {volist name="user.content" id="vo"}
+                    <li> <p> <span>{$vo.name}</span> 在<a href="{:url('Note/note')}?id={$vo.noteid}" target="_blank">{$vo.note}</a>中回答： </p>
+                        <div class="home-dacontent">
+                            {$vo.content}
+                        </div>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{include file="../application/index/view/header.html" /}
+<script src="http://localhost/Postbar/public/static/js/recharge/recharge.js"></script>
+<title>{$title} - 创新论坛</title>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+<div class="layui-container fly-marginTop fly-user-main">
+    {include file="../application/index/view/data.html" /}
+    <div class="site-tree-mobile layui-hide">
+        <i class="layui-icon"></i>
+    </div>
+    <div class="site-mobile-shade"></div>
+    <div class="fly-panel fly-panel-user" pad20="">
+        <div class="layui-tab layui-tab-brief" lay-filter="user">
+            <ul class="layui-tab-title" id="LAY_mine">
+                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">开通会员</a></li>{else/}<li><a href="?tion=1">开通会员</a></li>{/if}
+                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">余额充值</a></li>{else/}<li><a href="?tion=2">余额充值</a></li>{/if}
+            </ul>
+            <div class="layui-tab-content" style="padding: 20px 0;">
+                {if condition="$tion eq 1"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">选择开通</label>
+                        <div class="layui-input-block">
+                            <select class="diy-select" name="class" id="insider" onclick="imoney()">
+                                <option value=""></option>
+                                <option value="0">普通会员</option>
+                                <option value="1">黄金会员</option>
+                                <option value="2">钻石会员</option>
+                                <option value="3">至尊会员</option>
+                            </select>
+                            <span style="color: #5FB878" id="zed"></span>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="insider()">确认修改</button>
+                    </div>
+                </div>
+                {/if}
+                {if condition="$tion eq 2"}
+                <div class="layui-form layui-form-pane layui-tab-item layui-show">
+                    <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">充值</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="money" name="money" required="" lay-verify="phone" autocomplete="off" class="layui-input"/>
+                        </div>
+                        <span style="color: red;" id="kda"></span>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" onclick="recharge()">确认充值</button>
+                    </div>
+                </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

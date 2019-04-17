@@ -1,0 +1,56 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/Data/data.js"></script>
+<title>编辑帖子</title>
+</head>
+<body>
+<div class="page-container">
+    <div class="form form-horizontal" id="form-article-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>帖子标题：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$note.title}" placeholder="" id="title" name="title">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>分类栏目：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+                    <select name="tion" id="tion" class="select">
+                        <option value="0"> </option>
+                        {volist name="arr" id="vo"}
+                            <option value="{$vo.id}">{$vo.tion}</option>
+                        {/volist}
+                    </select>
+				</span>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">浏览量：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$note.num}" placeholder="" id="num" name="num" disabled>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>发布日期：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" id="date" name="date" value="{:date('Y-m-d H:i:s',$note.date)}" class="input-text Wdate" placeholder="" disabled>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-2">内容：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea id="content" name="content" cols="" rows="" class="textarea" placeholder="说点什么...最少输入10个字符">{$note.content}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/200</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                <button onclick="editNote({$note.id});" class="btn btn-success radius" type="button"> 编辑 </button>
+                <button onclick="window.location.reload()" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="qb-sougou-search" style="display: none; opacity: 0;"><p>搜索</p><p class="last-btn">复制</p><iframe src=""></iframe></div>
+</body>
+</html>
