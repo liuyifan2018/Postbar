@@ -15,17 +15,17 @@ trait CURD{
      * @var string
      */
     protected $table = "";
-    /**
-     * @param Request $request
-     * 增加数据
-     */
+
+	/**
+	 * @param Request $request
+	 * @throws Exception
+	 * 增加数据
+	 */
     protected function add(Request $request){
         $data = $request->param();
         if(!method_exists($data,'method')){
             foreach ($data as $k => $v){
-                if(empty($v)){
-                    var_dump(1111);
-                }
+                if(empty($v)) throw new Exception('参数错误');
             }
             $this->table->insert();
         }else{

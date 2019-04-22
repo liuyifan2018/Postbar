@@ -70,7 +70,7 @@ class IndexModel extends Model
                 }
             }
         }
-        $note['today'] = Whole::today();    //今日最热贴子(目前帖子少,还没修改每天最热);
+        $note['today'] = Whole::todayNote();    //今日最热贴子(目前帖子少,还没修改每天最热);
         $note['hot'] = Whole::hotNote();  //最热的6条帖子(因目前帖子少,还未改成每星期的最热的6条帖子);
         $note['items'] = $note['note']->items();
         foreach ($note['items'] as $k => $v){

@@ -42,12 +42,12 @@ class AdminModel extends Model{
         if($tion == 1){
             $userList['data'] = Db::table('user')
                 ->where(array('ad' => 0))
-                ->paginate(10,false,['query' => request()->param()]);;
+                ->paginate(10,false,['query' => request()->param()]);
             $userList['count'] = count($userList['data']);
         }elseif($tion == 2){
             $userList['data'] = Db::table('user')
                 ->where(array('ad' => 1))
-                ->paginate(10,false,['query' => request()->param()]);;
+                ->paginate(10,false,['query' => request()->param()]);
             $userList['count'] = count($userList['data']);
         }else{
             $userList = null;

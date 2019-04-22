@@ -172,14 +172,11 @@ class Data extends Controller
                 $uid = input('post.uid',0,'intval');
                 $file = request()->file('image');
                 if( empty( $file) ) throw new \Exception('没有上传图片!');
-                $info = $file
-	                ->rule('md5')
-	                ->validate(['size'=>15678,'ext'=>'jpg,png,gif'])
-	                ->move( '../uploads'); //移至到框架应用根目录uploads/目录下
-                if($info){
+                $info = $file->move( '../uploads'); //移至到框架应用根目录uploads/目录下
+	            if($info){
                     $this->model->upImage($uid,$info->getSaveName());
                 }else{
-                    $this->error($file->getError());
+                    $this->error( $file->getError() );
                 }
             }
         }catch (\Exception $e){

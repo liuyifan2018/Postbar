@@ -74,7 +74,7 @@ trait Whole{
 	 * @return mixed
 	 * 今日最热帖子
 	 */
-    public static function today(){
+    public static function todayNote(){
         $note = Db::table('note')->order('num desc')->find();
         return $note;
     }

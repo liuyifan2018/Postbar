@@ -1,0 +1,101 @@
+{include file="../application/super/view/header.html"/}
+  </head>
+  
+  <body>
+    <div class="x-body">
+      <div class="layui-form-item">
+          <label class="layui-form-label">
+              <span class="x-red">*</span>邮箱
+          </label>
+          <div class="layui-input-inline">
+              <input type="text" id="email" required="" autocomplete="off" class="layui-input">
+          </div>
+      </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">
+            <span class="x-red">*</span>用户名
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="username" required="" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            不可修改
+        </div>
+    </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">
+              <span class="x-red">*</span>昵称
+          </label>
+          <div class="layui-input-inline">
+              <input type="text" id="name" required="" autocomplete="off" class="layui-input">
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">
+              <span class="x-red">*</span>密码
+          </label>
+          <div class="layui-input-inline">
+              <input type="password" id="password" required="" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">
+              6到16个字符
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <label class="layui-form-label">
+              <span class="x-red">*</span>确认密码
+          </label>
+          <div class="layui-input-inline">
+              <input type="password" id="repassword" required="" autocomplete="off" class="layui-input">
+          </div>
+      </div>
+      <div class="layui-form-item">
+          <button onclick="AdminAdd()" class="layui-btn">增加</button>
+      </div>
+    </div>
+    <script>
+        function AdminAdd(){
+            var email = $("#email").val();
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var repassword = $("#repassword").val();
+            var name = $("#name").val();
+            var arr = [email,username,password,repassword,name];
+            for (var i = 0; i < arr.length; i++){
+                if(arr[i] == ""){
+                    layer.msg('必填项不能为空!');
+                    return false;
+                }
+            }
+            if(password != repassword){
+                layer.msg('两次密码不一致!');
+                return false;
+            }else{
+                $.ajax({
+                    url:'member_add',
+                    data:{
+                        email:email,
+                        username:username,
+                        password:password,
+                        repassword:repassword,
+                        name:name
+                    },
+                    type:'POST',
+                    success:function(res){
+                        layer.open({
+                            title:'提示信息!',
+                            content:res.msg,
+                            yes:function(){
+                                window.location.reload();
+                            }
+                        })
+                    },
+                    error:function(){
+                        layer.msg('网络异常!',{icon:5});
+                    }
+                })
+            }
+        }
+    </script>
+  </body>
+</html>

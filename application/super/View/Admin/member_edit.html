@@ -1,0 +1,96 @@
+{include file="../application/super/view/header.html"/}
+  </head>
+  
+  <body>
+    <div class="x-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>邮箱
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="email" value="{$admin.email}" required="" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red">*</span>将会成为您唯一的登入名
+            </div>
+        </div>
+          <div class="layui-form-item">
+              <label for="L_username" class="layui-form-label">
+                  <span class="x-red">*</span>昵称
+              </label>
+              <div class="layui-input-inline">
+                  <input type="text" id="name" value="{$admin.name}" required="" lay-verify="nikename"
+                  autocomplete="off" class="layui-input">
+              </div>
+          </div>
+          <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">
+                    <span class="x-red">*</span>手机号
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="number" value="{$admin.number}" required="" lay-verify="nikename"
+                           autocomplete="off" class="layui-input">
+                </div>
+          </div>
+            <div class="layui-form-item">
+                <label for="L_username" class="layui-form-label">
+                    <span class="x-red">*</span>地址
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="city" value="{$admin.city}" required="" lay-verify="nikename"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+          <div class="layui-form-item">
+              <label for="L_repass" class="layui-form-label">
+              </label>
+              <button onclick="AdminEdit({$admin.id})" class="layui-btn" lay-filter="add" lay-submit="">
+                  编辑
+              </button>
+          </div>
+      </form>
+    </div>
+    <script>
+        function AdminEdit(id){
+            if(id == null){
+                layer.msg('参数错误!');
+                return false;
+            }
+            var email = $("#email").val();
+            var number = $("#username").val();
+            var city = $("#repassword").val();
+            var name = $("#name").val();
+            var arr = [email,number,city,name];
+            for (var i = 0; i < arr.length; i++){
+                if(arr[i] == ""){
+                    layer.msg('必填项不能为空!');
+                    return false;
+                }
+            }
+            $.ajax({
+                url:'member_add',
+                data:{
+                    id:id,
+                    email:email,
+                    city:city,
+                    number:number,
+                    name:name
+                },
+                type:'POST',
+                success:function(res){
+                    layer.open({
+                        title:'提示信息!',
+                        content:res.msg,
+                        yes:function(){
+                            window.location.reload();
+                        }
+                    })
+                },
+                error:function(){
+                    layer.msg('网络异常!',{icon:5});
+                }
+            })
+        }
+    </script>
+  </body>
+</html>

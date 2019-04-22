@@ -57,13 +57,19 @@ class Index extends Controller{
 		try{
 			$info =  $this->model->welcome();
 			return view('welcome',[
-				'info'  =>  $info
+				'info'  =>  $info,
+				'date'  =>  date('Y-m-d H:i:s',time()),
+				'data'  =>  $this->data
 			]);
 		}catch (\Exception $e){
 			$this->error( $e->getMessage() );
 		}
 	}
 
+	/**
+	 * @return \think\response\View
+	 * 导航栏
+	 */
 	public function index(){
 		return view('index',[
 			'time'  =>  date('Y',time()),
