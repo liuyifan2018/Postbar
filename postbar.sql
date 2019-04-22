@@ -4,7 +4,7 @@
  Source Server         : 本地
  Source Server Type    : MySQL
  Source Server Version : 50553
- Source Host           : localhost:3306
+ Source Host           : :3306
  Source Schema         : postbar
 
  Target Server Type    : MySQL

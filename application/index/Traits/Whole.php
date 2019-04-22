@@ -15,7 +15,7 @@ trait Whole{
     public function isUser(){
         $data = Session::get('data');
         if(empty($data)){   //未登录跳入登录页
-        	header('Location: http://localhost/Postbar/Public/Index/User/login');
+        	header('Location: http://lyf.com/Postbar/Public/Index/User/login');
         }
     }
     /**

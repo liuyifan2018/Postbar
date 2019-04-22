@@ -17,7 +17,7 @@ trait Data{
 	public function isUser(){
 		$data = Session::get('data');
 		if(empty($data)){
-			header('Location: http://localhost/Postbar/Public/Super/User/login');  //用户未登录跳入登录页
+			header('Location: http://lyf.com/Postbar/Public/Super/User/login');  //用户未登录跳入登录页
 		}
 	}
 	/**
