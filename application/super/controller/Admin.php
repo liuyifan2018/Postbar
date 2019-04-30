@@ -58,13 +58,22 @@ class Admin extends Controller{
 	 * 会员列表
 	 */
 	public function member_list(){
-		$this->model = $this->model();
-		$admin = $this->model->member_list();
-		$page = $admin['data']->render();
-		return view('member_list',[
-			'page'  =>  $page,
-			'admin' =>  $admin
-		]);
+		try{
+			$this->model = $this->model();
+			$data = null;
+			if(Request()->isPost()){
+				$data = input('post.');
+				$this->model->serach( $data );
+			}
+			$admin = $this->model->member_list( $data );
+			$page = $admin['data']->render();
+			return view('member_list',[
+				'page'  =>  $page,
+				'admin' =>  $admin
+			]);
+		}catch (\Exception $e){
+
+		}
 	}
 	/**
 	 * @return mixed|\think\response\View
@@ -88,6 +97,10 @@ class Admin extends Controller{
 		}
 	}
 
+	/**
+	 * @return mixed|\think\response\View
+	 * 编辑会员
+	 */
 	public function member_edit(){
 		try{
 			$this->model = $this->model();
@@ -103,10 +116,6 @@ class Admin extends Controller{
 		}catch (\Exception $e){
 			return json_decode( $e->getMessage() , true);
 		}
-	}
-
-	public function member_del(){
-		return view('member_del');
 	}
 
 	/**
@@ -129,11 +138,62 @@ class Admin extends Controller{
 			return json_decode( $e->getMessage() ,true);
 		}
 	}
+	/**
+	 * @return mixed
+	 * 会员禁用或启用
+	 */
 	public function stop(){
 		try{
 			$this->model = $this->model();
-			$data = input('post.');
+			$data = input('get.');
 			$this->model->stop( $data );
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+	/**
+	 * @return mixed|\think\response\View
+	 * 删除会员列表
+	 */
+	public function member_del(){
+		try{
+			$this->model = $this->model();
+			$list = $this->model->member_del();
+			return view('member_del',[
+				'list'  =>  $list
+			]);
+		}catch (\Exception $e){
+			$this->error( $e->getMessage() );
+		}
+	}
+
+	/**
+	 * @return mixed
+	 * 删除
+	 */
+	public function del(){
+		try{
+			$this->model = $this->model();
+			if(Request()->isGet()){
+				$data = input('get.');
+				$this->model->del_admin( $data );
+			}
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+
+	/**
+	 * @return mixed
+	 * 恢复
+	 */
+	public function letme(){
+		try{
+			$this->model = $this->model();
+			if(Request()->isGet()){
+				$data = input('get.');
+				$this->model->letme( $data );
+			}
 		}catch (\Exception $e){
 			return json_decode( $e->getMessage() ,true);
 		}

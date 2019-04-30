@@ -14,10 +14,8 @@
     </div>
     <div class="x-body">
       <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so">
-          <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
-          <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
-          <input type="text" name="username"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        <form class="layui-form layui-col-md12 x-so" method="post">
+          <input type="text" name="all"  placeholder="请输入关键字" autocomplete="off" class="layui-input">
           <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
       </div>
@@ -56,14 +54,19 @@
               <td>{$vo.city}</td>
               <td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
               <td class="td-status">
-                <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span></td>
+                {if condition="$vo.is_show == 1"}
+                  <span class="layui-btn layui-btn-normal layui-btn-mini">已启用</span>
+                {else/}
+                  <span class="layui-btn layui-btn-danger layui-btn-mini">已禁用</span>
+                {/if}
+              </td>
               <td class="td-manage">
-                {if condition="$vo.ad eq 1"}
-                  <a onclick="stop({$vo.id},0)" href="javascript:;"  title="启用">
+                {if condition="$vo.is_show eq 1"}
+                  <a href="javascript:stop({$vo.id},0)"  title="启用">
                     <i class="layui-icon">&#xe601;</i>
                   </a>
                 {else/}
-                  <a onclick="stop({$vo.id},1)" href="javascript:;"  title="启用">
+                  <a href="javascript:stop({$vo.id},1)"  title="禁用">
                     <i class="layui-icon">&#xe601;</i>
                   </a>
                 {/if}
@@ -73,7 +76,7 @@
                 <a onclick="x_admin_show('修改密码','member_password.html?id={$vo.id}',600,400)" title="修改密码" href="javascript:;">
                   <i class="layui-icon">&#xe631;</i>
                 </a>
-                <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                <a title="删除" href="javascript:del({$vo.id});">
                   <i class="layui-icon">&#xe640;</i>
                 </a>
               </td>
@@ -84,35 +87,65 @@
       <div class="pagination">
         {$page|raw}
       </div>
-      <script>
-        function stop(id,type){
-            if(id == null){
-                layer.msg('参数错误!');
-                return false;
-            }else{
-                $.ajax({
-                    url:'stop',
-                    data:{
-                        id:id,
-                        type:type
-                    },
-                    type:'',
-                    success:function(res){
-                        layer.open({
-                            title:'提示信息!',
-                            content:res.msg,
-                            yes:function(){
-                                window.location.reload();
-                            }
-                        })
-                    },
-                    error:function(){
-                        layer.msg('网络异常!');
-                    }
-                })
-            }
-        }
-      </script>
     </div>
   </body>
 </html>
+<script>
+    function stop(id,type){
+        if(id == null){
+            layer.msg('参数错误!');
+            return false;
+        }else{
+            $.ajax({
+                url:'stop',
+                data:{
+                    id:id,
+                    type:type
+                },
+                type:'GET',
+                success:function(res){
+                    layer.open({
+                        title:'提示信息!',
+                        content:res.msg,
+                        yes:function(){
+                            window.location.reload();
+                        }
+                    })
+                },
+                error:function(){
+                    layer.msg('网络异常!');
+                }
+            })
+        }
+    }
+    function del(id) {
+        layer.confirm("确定要删除吗?此方法不可逆!",{icon:5},function(index){
+            if(index){
+                if(id == null){
+                    layer.msg('参数错误!');
+                    return false;
+                }else{
+                    $.ajax({
+                        url:'del',
+                        data:{
+                            id:id
+                        },
+                        type:'GET',
+                        success:function(res){
+                            layer.open({
+                                title:'提示信息',
+                                content:res.msg,
+                                yes:function () {
+                                    window.location.reload();
+                                }
+                            })
+                        },
+                        error:function(){
+                            layer.msg('网络异常!');
+                        }
+                    })
+                }
+            }
+        });
+    }
+</script>

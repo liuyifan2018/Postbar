@@ -24,18 +24,29 @@ class AdminModel extends Model{
 	 */
 	public function __construct($data)
 	{
-		parent::__construct();
+		parent:: __construct();
 		if( empty( $data ) ) throw new \Exception('用户未登录!');
 		$this->data = $data;
 	}
 
 	/**
+	 * @param $data
 	 * @return mixed
 	 * 会员列表
 	 */
-	public function member_list(){
-		$admin['data'] = Db::table('user')->where(['ad' => 1])->paginate(5,false,['query' => request()->param()]);
-		$admin['count'] = count($admin['data']);
+	public function member_list( $data ){
+		if(empty( $data )){
+			$admin['data'] = Db::table('user')->where(['ad' => 1,'is_del' => 1])->paginate(5,false,['query' => request()->param()]);
+			$admin['count'] = count($admin['data']);
+		}else{
+			//搜索
+			$admin['data'] = Db::table('user')->where(
+				['email','like',$data.'%'],
+				['name','like',$data.'%'],
+				['username','like',$data.'%']
+			)->select();
+			$admin['count'] = count($admin['data']);
+		}
 		return $admin;
 	}
 
@@ -102,9 +113,14 @@ class AdminModel extends Model{
 		throw new \Exception('{"code":"1","msg":"添加成功!"}');
 	}
 
+	/**
+	 * @param $data
+	 * @throws \Exception
+	 * 会员禁用或启用
+	 */
 	public function stop( $data ){
 		if(empty( $data['id'] ) ) throw new \Exception('{"code":"0","msg":"参数错误!"}');
-		Db::table('user')->where(['id' => $data['id']])->update(['ad' => $data['type']]);
+		Db::table('user')->where(['id' => $data['id']])->update(['is_show' => $data['type']]);
 		if($data['type'] == 1){
 			throw new \Exception('{"code":"1","msg":"已上架!"}');
 		}elseif($data['type'] == 0){
@@ -112,4 +128,36 @@ class AdminModel extends Model{
 		}
 		throw new \Exception('{"code":"0","msg":"操作失败!"}');
 	}
+
+	/**
+	 * @return mixed
+	 * 删除会员列表
+	 */
+	public function member_del(){
+		$list = Db::table('user')->where(['is_del' => 2])->select();
+		return $list;
+	}
+
+	/**
+	 * @param $data
+	 * @throws \Exception
+	 * 删除会员
+	 */
+	public function del_admin( $data ){
+		if( empty( $data['id'] ) ) throw new \Exception('{"code":"0","msg":"参数错误"}');
+		Db::table('user')->where(['id' => $data['id']])->update(['is_del' => 2]);
+		throw new \Exception('{"code":"0","msg":"删除成功!"}');
+	}
+
+	/**
+	 * @param $data
+	 * @throws \Exception
+	 * 删除会员
+	 */
+	public function letme( $data ){
+		if( empty( $data['id'] ) ) throw new \Exception('{"code":"0","msg":"参数错误"}');
+		Db::table('user')->where(['id' => $data['id']])->update(['is_del' => 1]);
+		throw new \Exception('{"code":"0","msg":"恢复成功!"}');
+	}
+
 }

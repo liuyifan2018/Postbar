@@ -3,6 +3,8 @@ namespace app\index\controller;
 use app\index\model\IndexModel;
 use app\index\Traits\Whole;
 use think\Controller;
+use think\Db;
+use think\Request;
 
 class Index extends Controller
 {
@@ -74,5 +76,18 @@ class Index extends Controller
         }catch (\Exception $e){
             $this->error( $e->getMessage() );
         }
+    }
+	/**
+	 * @return \think\response\View
+	 * 测试SQL注入
+	 */
+    public function test(){
+    	if(Request()->isGet()){
+    		$id = input('get.id');
+    		$data = Db::table('note')->where(['id' => $id])->select();
+    		dump(Db::getLastSql());
+    		dump($data);
+	    }
+    	return view('test');
     }
 }

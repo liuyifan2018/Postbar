@@ -1,5 +1,5 @@
 {include file="../application/index/view/header.html" /}
-<script src="http:///Postbar/public/static/js/note/note.js"></script>
+<script src="http://localhost/Postbar/public/static/js/note/note.js"></script>
 <title>{$note.title} - 创新论坛</title>
 <body>
 {include file="../application/index/view/template.html" /}
@@ -25,7 +25,7 @@
                     </a>
                 </div>
                 <div class="detail-about">
-                    <a class="fly-avatar" href="{:url('Data/user')}?username={$note.username}"> <img src="http:///Postbar/uploads/{$note.user['img']}" alt="{$note.user['name']}" /> </a>
+                    <a class="fly-avatar" href="{:url('Data/user')}?username={$note.username}"> <img src="http://localhost/Postbar/uploads/{$note.user['img']}" alt="{$note.user['name']}" /> </a>
                     <div class="fly-detail-user">
                         <a href="{:url('Data/user')}?username={$note.username}" class="fly-link"> <cite>{$note.user['name']}</cite> </a>
                         <span>{:date('Y-m-d H:i:s',$note['date'])}</span>
@@ -57,7 +57,7 @@
                     {volist name="note.comment" id="vo"}
                     <li data-id="171108"> <a name="item-1553682902079"></a>
                         <div class="detail-about detail-about-reply">
-                            <a class="fly-avatar" href="{:url('Data/user')}?username={$vo.username}"> <img src="http:///Postbar/uploads/{$vo.img}" alt="{$vo.name}" /> </a>
+                            <a class="fly-avatar" href="{:url('Data/user')}?username={$vo.username}"> <img src="http://localhost/Postbar/uploads/{$vo.img}" alt="{$vo.name}" /> </a>
                             <div class="fly-detail-user">
                                 <a href="{:url('Data/user')}?username={$vo.username}" class="fly-link"> <cite>{$vo.name}</cite> <i class="layui-badge fly-badge-vip">{$vo.insider}</i> </a>
                             </div>
