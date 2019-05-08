@@ -13,8 +13,8 @@
     <div class="fly-panel fly-panel-user" pad20="">
         <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_uc">
             <ul class="layui-tab-title" id="LAY_mine">
-                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">我发的帖</a></li>{else/}<li><a href="?tion=1">我发的帖</a></li>{/if}
-                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">我收藏的帖</a></li>{else/}<li><a href="?tion=2">我收藏的帖</a></li>{/if}
+                <li class="{$tion==1?'layui-this':''}"><a href="?tion=1">我发的帖</a></li>
+                <li class="{$tion==2?'layui-this':''}"><a href="?tion=2">我收藏的帖</a></li>
             </ul>
             <div class="layui-tab-content" id="LAY_ucm" style="padding: 5px 0;">
                 {if condition="$tion eq 1"}
@@ -61,7 +61,7 @@
                                                 </div></td>
                                             <td data-field="status" data-key="1-0-1" align="center" data-content="0" class="">
                                                 <div class="layui-table-cell laytable-cell-1-0-4">
-                                                    <span style="color: #999;">{if condition="$vo.is_show eq 1"}下架
+                                                    <span style="color: #999;"> condition="$vo.is_show eq 1"}下架
                                                         {else/}上架
                                                         {/if}</span>
                                                 </div></td>
@@ -75,12 +75,12 @@
                                                 </div></td>
                                             <td data-field="5" data-key="1-0-5" data-content="" class="layui-table-col-special">
                                                 <div class="layui-table-cell laytable-cell-1-0-4">
-                                                    {if condition="$vo.is_show eq 1"}
+                                                     condition="$vo.is_show eq 1"}
                                                     <a class="layui-btn layui-btn-xs success" href="javascript:is_show({$vo.id},2)" target="_blank">
                                                         上架中
                                                     </a>
                                                     {/if}
-                                                    {if condition="$vo.is_show eq 2"}
+                                                     condition="$vo.is_show eq 2"}
                                                     <a class="layui-btn layui-btn-xs defult" href="javascript:is_show({$vo.id},1)" target="_blank">
                                                         已下架
                                                     </a>

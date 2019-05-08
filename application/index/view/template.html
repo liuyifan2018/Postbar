@@ -1,10 +1,15 @@
 <!-- 头部导航 -->
+<style>
+    .red{
+        color: #7DD43C !important;
+    }
+</style>
 <header class="ltHead">
     <div class="ltHead_cen">
         <ul class="headNav">
             <li><a href="{:url('Index/index')}">首页</a></li>
             {volist name="arr" id="vo"}
-            <li><a href="{:url('Index/index')}?tion={$vo.id}">{$vo.tion}</a></li>
+                <li><a href="{:url('Index/index')}?tion={$vo.id}">{$vo.tion}</a></li>
             {/volist}
         </ul>
         <div class="ltForm appear">

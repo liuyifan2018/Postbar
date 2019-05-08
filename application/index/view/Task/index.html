@@ -49,11 +49,9 @@
 						<a href="{:url('Data/index')}"><cite>每日签到</cite></a> 20%
 					</blockquote>
 					<p>
-						{if condition="$width.signed == 1"}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-dange fly-delete">已完成</a>
-						{else/}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">未完成</a>
-						{/if}
+						<a href="javascript:;" class="layui-btn layui-btn-sm {$width.signed==1?'layui-btn-dange':'layui-btn-danger'} fly-delete">
+							{$width.signed==1?'已完成':'未完成'}
+						</a>
 					</p>
 				</li>
 				<li data-id="160921">	<!--2-->
@@ -61,11 +59,9 @@
 						<a href="{:url('Note/addNote')}"><cite>每日发布帖子</cite></a> 20%
 					</blockquote>
 					<p>
-						{if condition="$width.note == 1"}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-dange fly-delete">已完成</a>
-						{else/}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">未完成</a>
-						{/if}
+						<a href="javascript:;" class="layui-btn layui-btn-sm {$width.note==1?'layui-btn-dange':'layui-btn-danger'} fly-delete">
+							{$width.note==1?'已完成':'未完成'}
+						</a>
 					</p>
 				</li>
 				<li data-id="160921">	<!--3-->
@@ -73,11 +69,9 @@
 						<a href="{:url('Index/index')}"><cite>每日点赞帖子</cite></a> 20%
 					</blockquote>
 					<p>
-						{if condition="$width.content == 1"}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-dange fly-delete">已完成</a>
-						{else/}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">未完成</a>
-						{/if}
+						<a href="javascript:;" class="layui-btn layui-btn-sm {$width.content==1?'layui-btn-dange':'layui-btn-danger'} fly-delete">
+							{$width.content==1?'已完成':'未完成'}
+						</a>
 					</p>
 				</li>
 				<li data-id="160921">	<!--4-->
@@ -85,11 +79,9 @@
 						<a href="{:url('Index/index')}"><cite>每日评论帖子</cite></a> 20%
 					</blockquote>
 					<p>
-						{if condition="$width.good == 1"}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-dange fly-delete">已完成</a>
-						{else/}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">未完成</a>
-						{/if}
+						<a href="javascript:;" class="layui-btn layui-btn-sm {$width.good==1?'layui-btn-dange':'layui-btn-danger'} fly-delete">
+							{$width.good==1?'已完成':'未完成'}
+						</a>
 					</p>
 				</li>
 				<li data-id="160921">	<!--5-->
@@ -97,11 +89,9 @@
 						<a href="{:url('Data/recharge')}"><cite>每日充值</cite></a> 20%
 					</blockquote>
 					<p>
-						{if condition="$width.recharge == 1"}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-dange fly-delete">已完成</a>
-						{else/}
-							<a href="javascript:;" class="layui-btn layui-btn-sm layui-btn-danger fly-delete">未完成</a>
-						{/if}
+						<a href="javascript:;" class="layui-btn layui-btn-sm {$width.recharge==1?'layui-btn-dange':'layui-btn-danger'} fly-delete">
+							{$width.recharge==1?'已完成':'未完成'}
+						</a>
 					</p>
 				</li>
 			</ul>

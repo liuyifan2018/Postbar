@@ -1,91 +1,35 @@
 <!--选择Tab-->
 <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="user">
-	{if condition="$title == '我的主页'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Data/user')}?username={$data.username}">
-				<i class="iconfont icon-room"></i> 我的主页 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Data/user')}?username={$data.username}">
-				<i class="iconfont icon-room"></i> 我的主页 </a>
-		</li>
-	{/if}
-	{if condition="$title == '用户中心'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Data/index')}">
-				<i class="iconfont icon-yxj-expression"></i> 用户中心 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Data/index')}">
-				<i class="iconfont icon-yxj-expression"></i> 用户中心 </a>
-		</li>
-	{/if}
-	{if condition="$title == '基本设置'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Data/set')}">
-				<i class="iconfont icon-shezhi"></i> 基本设置 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Data/set')}">
-				<i class="iconfont icon-shezhi"></i> 基本设置 </a>
-		</li>
-	{/if}
-	{if condition="$title == '我的帖子'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Data/note')}">
-				<i class="iconfont icon-tiezi"></i> 我的帖子 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Data/note')}">
-				<i class="iconfont icon-tiezi"></i> 我的帖子 </a>
-		</li>
-	{/if}
-	{if condition="$title == '我的消息'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Message/message')}">
-				<i class="iconfont icon"></i> 我的消息 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Message/message')}">
-				<i class="iconfont icon-zan"></i> 我的消息 </a>
-		</li>
-	{/if}
-	{if condition="$title == '充值中心'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Data/Recharge')}">
-				<i class="iconfont icon-chanpin"></i> 充值中心 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Data/Recharge')}">
-				<i class="iconfont icon-chanpin"></i> 充值中心 </a>
-		</li>
-	{/if}
-	{if condition="$title == '我的好友'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Friend/index')}">
-				<i class="iconfont icon-kaifashili"></i> 我的好友 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Friend/index')}">
-				<i class="iconfont icon-kaifashili"></i> 我的好友 </a>
-		</li>
-	{/if}
-	{if condition="$title == '今日任务'"}
-		<li class="layui-nav-item layui-this">
-			<a href="{:url('Task/index')}">
-				<i class="iconfont icon-aqrenzheng"></i> 今日任务 </a>
-		</li>
-	{else/}
-		<li class="layui-nav-item">
-			<a href="{:url('Task/index')}">
-				<i class="iconfont icon-aqrenzheng"></i> 今日任务 </a>
-		</li>
-	{/if}
+	<li class="layui-nav-item {$title=='我的主页'?'layui-this':''}">
+		<a href="{:url('Data/user')}?username={$data.username}">
+			<i class="iconfont icon-room"></i> 我的主页 </a>
+	</li>
+	<li class="layui-nav-item {$title=='用户中心'?'layui-this':''}">
+		<a href="{:url('Data/user')}?username={$data.username}">
+			<i class="iconfont icon-yxj-expression"></i> 用户中心 </a>
+	</li>
+	<li class="layui-nav-item {$title=='基本设置'?'layui-this':''}">
+		<a href="{:url('Data/set')}">
+			<i class="iconfont icon-shezhi"></i> 基本设置 </a>
+	</li>
+	<li class="layui-nav-item {$title=='我的帖子'?'layui-this':''}">
+		<a href="{:url('Data/note')}">
+			<i class="iconfont icon-tiezi"></i> 我的帖子 </a>
+	</li>
+	<li class="layui-nav-item {$title=='我的消息'?'layui-this':''}">
+		<a href="{:url('Message/message')}">
+			<i class="iconfont layui-icon-menu-fill"></i> 我的消息 </a>
+	</li>
+	<li class="layui-nav-item {$title=='充值中心'?'layui-this':''}">
+		<a href="{:url('Data/Recharge')}">
+			<i class="iconfont icon-chanpin"></i> 充值中心 </a>
+	</li>
+	<li class="layui-nav-item {$title=='我的好友'?'layui-this':''}">
+		<a href="{:url('Friend/index')}">
+			<i class="iconfont icon-kaifashili"></i> 我的好友 </a>
+	</li>
+	<li class="layui-nav-item {$title=='今日任务'?'layui-this':''}">
+		<a href="{:url('Task/index')}">
+			<i class="iconfont icon-aqrenzheng"></i> 今日任务 </a>
+	</li>
 </ul>

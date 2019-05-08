@@ -19,8 +19,11 @@
         <i class="iconfont icon-shijian"></i><span>{:date('Y-m-d',$user.user['date'])} 加入</span>
         <i class="iconfont icon-chengshi"></i><span>来自{$user.user['city']}</span>
     </p>
-    {if condition="$user.user['auto'] eq null"}<p class="fly-home-sign">（这个人懒得留下签名）</p>{/if}
-    {if condition="$user.user['auto'] neq null"}<p class="fly-home-sign">{$user.user['auto']}</p>{/if}
+    {if condition="$user.user['auto'] eq null"}
+        <p class="fly-home-sign">（这个人懒得留下签名）</p>
+    {else/}
+        <p class="fly-home-sign">{$user.user['auto']}</p>
+    {/if}
 </div>
 <div class="layui-container">
     <div class="layui-row layui-col-space15">

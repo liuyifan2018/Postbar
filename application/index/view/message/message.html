@@ -13,10 +13,10 @@
     <div class="fly-panel fly-panel-user" pad20="">
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">好友验证</a></li>{else/}<li><a href="?tion=1">好友验证</a></li>{/if}
-                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">会员消息</a></li>{else/}<li><a href="?tion=2">会员信息</a></li>{/if}
-                {if condition="$tion eq 3"}<li class="layui-this"><a href="?tion=3">帖子消息</a></li>{else/}<li><a href="?tion=3">帖子消息</a></li>{/if}
-                {if condition="$tion eq 4"}<li class="layui-this"><a href="?tion=4">回复信息</a></li>{else/}<li><a href="?tion=4">回复信息</a></li>{/if}
+                <li class="{$tion == 1?'layui-this':''}"><a href="?tion=1">好友验证</a></li>
+                <li class="{$tion == 2?'layui-this':''}"><a href="?tion=2">会员消息</a></li>
+                <li class="{$tion == 3?'layui-this':''}"><a href="?tion=3">帖子消息</a></li>
+                <li class="{$tion == 4?'layui-this':''}"><a href="?tion=4">回复信息</a></li>
             </ul>
             {if condition="$tion eq 1"}
             <div class="layui-tab layui-tab-brief" lay-filter="user" id="LAY_msg" style="margin-top: 15px;">

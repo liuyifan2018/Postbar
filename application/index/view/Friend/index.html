@@ -21,9 +21,9 @@
     <div class="fly-panel fly-panel-user" pad20="">
         <div class="layui-tab layui-tab-brief" lay-filter="user">
             <ul class="layui-tab-title" id="LAY_mine">
-                {if condition="$tion eq 1"}<li class="layui-this"><a href="?tion=1">我的好友</a></li>{else/}<li><a href="?tion=1">我的好友</a></li>{/if}
-                {if condition="$tion eq 2"}<li class="layui-this"><a href="?tion=2">搜索好友</a></li>{else/}<li><a href="?tion=2">搜索好友</a></li>{/if}
-                {if condition="$tion eq 3"}<li class="layui-this"><a href="?tion=3">黑名单</a></li>{else/}<li><a href="?tion=3">黑名单</a></li>{/if}
+                <li class="{$tion==1?'layui-this':''}"><a href="?tion=1">我的好友</a></li>
+                <li class="{$tion==2?'layui-this':''}"><a href="?tion=2">搜索好友</a></li>
+                <li class="{$tion==3?'layui-this':''}"><a href="?tion=3">黑名单</a></li>
                 <li><a href="{:url('Friend/message')}">消息列表</a></li>
             </ul>
             <div class="layui-tab-content" style="padding: 20px 0;">

@@ -21,16 +21,8 @@
         </div>
         <div class="indexMain_left_btn">
             <ul>
-                {if condition='$tion == "hot"'}
-                    <li><a href="?tion=hot" class="on">最热</a></li>
-                {else/}
-                    <li><a href="?tion=hot">最热</a></li>
-                {/if}
-                {if condition='$tion == "new"'}
-                    <li><a href="?tion=new" class="on">最新</a></li>
-                {else/}
-                    <li><a href="?tion=new">最新</a></li>
-                {/if}
+                <li><a href="?tion=hot" class="{$tion=='hot'?'on':''}">最热</a></li>
+                <li><a href="?tion=hot" class="{$tion=='new'?'on':''}">最热</a></li>
             </ul>
         </div>
         <div class="indexMain_left_con">
