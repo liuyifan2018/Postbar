@@ -1,0 +1,34 @@
+{include file="../application/index/view/header.html" /}
+<link rel="stylesheet" href="http://localhost/Postbar/public/static/css/notice/defult.css"/>
+<link rel="stylesheet" href="http://localhost/Postbar/public/static/css/notice/style.css"/>
+<title>创新论坛</title>
+<style>
+	marquee{
+		line-height: 60px;
+	}
+	marquee cite{
+		color: #ff5973;
+	}
+</style>
+</head>
+<body>
+{include file="../application/index/view/template.html" /}
+
+<main>
+	<section class="main">
+		<div class="container mainContent">
+			<div class="zzsc">
+				<h1>{$notice.title}
+					<span>{:date('Y-m-d H:i:s',$notice['date'])}</span>
+					<span>阅读人数：{$notice.num}</span>
+				</h1>
+			</div>
+			<p>{$notice.content}.</p>
+
+			<a href="{:url('Index/index')}"><button class="about">Home</button></a>
+		</div>
+	</section>
+</main>
+
+</body>
+</html>

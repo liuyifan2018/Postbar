@@ -77,6 +77,16 @@
                 </div>
             </div>
             <div class="indexWxpublic">
+                <div class="indexPublic_head">
+                    创新公告
+                </div>
+                <div class="indexPublic_con">
+                    <ul class="weekHot">
+                        {volist name="note.notice" id="vo"}
+                            <li><a href="{:url('Notice/notice')}?id={$vo.id}">{$vo.title}</a><span>{$vo.name}</span></li>
+                        {/volist}
+                    </ul>
+                </div>
                 <p>
                     <a href="http://localhost/Postbar/public/admin/User/login">进入后台管理</a>
                 </p>

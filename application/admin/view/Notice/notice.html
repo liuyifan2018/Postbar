@@ -1,0 +1,55 @@
+{include file="../application/admin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/ajs/notice/notice.js"></script>
+<title>公告管理</title>
+<link rel="stylesheet" href="http://demo.h-ui.net/H-ui.admin/3.1/lib/layer/2.4/skin/layer.css" id="layui_layer_skinlayercss" style=""><link href="lib/My97DatePicker/4.8/skin/WdatePicker.css" rel="stylesheet" type="text/css"></head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont"></i> 首页 <span class="c-gray en">&gt;</span> 公告中心 <span class="c-gray en">&gt;</span> 公告管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新"><i class="Hui-iconfont"></i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="{:url('Notice/addNotice')}" class="btn btn-primary radius"><i class="Hui-iconfont"></i> 添加公告</a></span> <span class="r">共有数据：<strong>{$notice.count}</strong> 条</span> </div>
+	<div class="mt-20">
+		<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer"><table class="table table-border table-bordered table-hover table-bg table-sort dataTable no-footer" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+			<thead>
+			<tr class="text-c" role="row"><th width="25" class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 25px;"><input type="checkbox" name="" value=""></th><th width="80" class="sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="descending" aria-label="ID: 升序排列" style="width: 80px;">ID</th><th width="100" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="用户名: 升序排列" style="width: 100px;">用户名</th><th width="40" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="性别: 升序排列" style="width: 80px;">公告标题</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">公告内容</th><th width="90" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="手机: 升序排列" style="width: 90px;">排序</th><th width="150" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="邮箱: 升序排列" style="width: 150px;">发布时间</th><th width="" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="地址: 升序排列" style="width: 150px;">状态</th><th width="130" class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="加入时间: 升序排列" style="width: 130px;">是否置顶</th><th width="100" class="sorting_disabled" rowspan="1" colspan="1" aria-label="操作" style="width: 100px;">操作</th></tr>
+			</thead>
+			<tbody>
+			{volist name="notice.list" id="vo"}
+			<tr class="text-c odd" role="row">
+				<td><input type="checkbox" value="1" name=""></td>
+				<td>{$vo.id}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.title}</td>
+				<td>{$vo.content}</td>
+				<td>{$vo.sort}</td>
+				<td>{:date('Y-m-d H:i:s',$vo['date'])}</td>
+				<td class="td-manage">
+					{if condition="$vo.is_show == 1"}
+					<a style="text-decoration:none" href="javascript:is_show({$vo.id},2)">
+						<span class="label label-danger radius">
+                            禁用
+                        </span>
+					</a>
+						{else/}
+					<a style="text-decoration:none" href="javascript:is_show({$vo.id},1)">
+						<span class="label label-success radius">
+                            启用
+                        </span>
+					</a>
+					{/if}
+				</td>
+				<td>{$vo.is_top}</td>
+				<td class="td-manage">
+					<a style="text-decoration:none" href="{:url('Notice/editNotice')}?id={$vo.id}" title="编辑"><i class="Hui-iconfont"></i></a>
+					<a href="javascript:del({$vo.id})" style="text-decoration:none" class="ml-5" title="删除"><i class="Hui-iconfont"></i></a>
+				</td>
+			</tr>
+			{/volist}
+			</tbody>
+		</table>
+			<div class="pagination">
+				{$page|raw}
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
