@@ -40,7 +40,7 @@ class UserModel extends Model{
         $start_time = strtotime(date('Y-m-d',time()));
         $end_time = $start_time + 86399;
         $user = Db::table('user')->where(array('username' => $data['username']))->find();
-        $log = Db::table('log')
+        $log = Db::table('forum_log')
             ->where(array('username' => $data['username'],'log' => '密码错误'))
             ->whereTime('date','between',array($start_time , $end_time))
             ->count();

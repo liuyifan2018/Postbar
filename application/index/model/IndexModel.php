@@ -44,24 +44,24 @@ class IndexModel extends Model
         $map = array();
         $map['is_show'] = 1;
         $map['state'] = 1;
-        $item = Db::table('config')->where(['id' => 1])->value('items');
+        $item = Db::table('forum_config')->where(['id' => 1])->value('items');
         if(empty($tion)){
-            $note['note'] = Db::table('note')
+            $note['note'] = Db::table('forum_note')
                 ->where($map)
                 ->paginate($item,false,['query' => request()->param()]); //已通过未被删除的帖子
         }else{
             if(is_numeric($tion)){
-                $note['note'] = Db::table('note')
+                $note['note'] = Db::table('forum_note')
                     ->where(['is_show' => 1 , 'state' => 1 ,'tion' => $tion])
                     ->paginate($item,false,['query' => request()->param()]);    //分类筛选的帖子
             }else{
                 if($tion == 'hot'){
-                    $note['note'] = Db::table('note')
+                    $note['note'] = Db::table('forum_note')
                         ->where($map)
                         ->order('num desc')
                         ->paginate($item,false,['query' => request()->param()]);    //分类筛选的帖子
                 }elseif ($tion == 'new'){
-                    $note['note'] = Db::table('note')
+                    $note['note'] = Db::table('forum_note')
                         ->where($map)
                         ->order('date desc')
                         ->paginate($item,false,['query' => request()->param()]);    //分类筛选的帖子
@@ -70,7 +70,7 @@ class IndexModel extends Model
                 }
             }
         }
-        $note['notice'] = Db::table('notice')->where(['is_show' => 1,'is_del' =>1])->order('sort asc,id desc')->limit(5)->select();
+        $note['notice'] = Db::table('forum_notice')->where(['is_show' => 1,'is_del' =>1])->order('sort asc,id desc')->limit(5)->select();
         foreach ($note['notice'] as $k => $v){
 	        $note['notice'][$k]['name'] = Db::table('user')->where(['username' => $v['username']])->value('name'); //用户名
         }
@@ -78,7 +78,7 @@ class IndexModel extends Model
         $note['hot'] = Whole::hotNote();  //最热的6条帖子(因目前帖子少,还未改成每星期的最热的6条帖子);
         $note['items'] = $note['note']->items();
         foreach ($note['items'] as $k => $v){
-            $note['items'][$k]['tion'] = Db::table('classify')
+            $note['items'][$k]['tion'] = Db::table('forum_classify')
 	            ->where(array('id' => $v['tion']))
 	            ->value('tion');    //帖子分类名
             $note['items'][$k]['name'] = Db::table('user')
@@ -94,16 +94,16 @@ class IndexModel extends Model
 	 * 搜索
 	 */
     public function search( $title ){
-	    $item = Db::table('config')->where(['id' => 1])->value('items');
+	    $item = Db::table('forum_config')->where(['id' => 1])->value('items');
 	    if(empty($title)){
 			$this->error('请输入关键字!');
 		}else{
-			$note['note'] = Db::table('note')
+			$note['note'] = Db::table('forum_note')
 				->where('title','like',$title.'%')
 				->paginate($item,false,['query' => request()->param()]);
 		    $note['items'] = $note['note']->items();
 		    foreach ($note['items'] as $k => $v){
-			    $note['items'][$k]['tion'] = Db::table('classify')
+			    $note['items'][$k]['tion'] = Db::table('forum_classify')
 				    ->where(array('id' => $v['tion']))
 				    ->value('tion');    //帖子分类名
 			    $note['items'][$k]['name'] = Db::table('user')

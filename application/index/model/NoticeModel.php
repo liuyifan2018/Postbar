@@ -38,7 +38,7 @@ class NoticeModel extends Model{
 	 */
 	public function Notice( $id ){
 		if(empty($id)) throw new \Exception('公告不存在!');
-		$notice = Db::table('notice')->where(['id' => $id])->find();
+		$notice = Db::table('forum_notice')->where(['id' => $id])->find();
 		$notice['num'] = substr_count($notice['num'],',');
 		return $notice;
 	}
@@ -49,14 +49,14 @@ class NoticeModel extends Model{
 	 */
 	public function num( $id ){
 		if(empty($id)) throw new \Exception('公告不存在!');
-		$num = Db::table('notice')->where(['id' => $id])->value('num');
+		$num = Db::table('forum_notice')->where(['id' => $id])->value('num');
 		if($num != ""){
 			$userList = explode(",",$num);
 			if(!in_array($this->data['username'],$userList)){
-				Db::table('notice')->where(['id' => $id])->update(['num' => $num.$this->data['username'].',']);
+				Db::table('forum_notice')->where(['id' => $id])->update(['num' => $num.$this->data['username'].',']);
 			}
 		}else{
-			Db::table('notice')->where(['id' => $id])->update(['num' => $this->data['username'].',']);//第一个阅读的人
+			Db::table('forum_notice')->where(['id' => $id])->update(['num' => $this->data['username'].',']);//第一个阅读的人
 		}
 
 	}

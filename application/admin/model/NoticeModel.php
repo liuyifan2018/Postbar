@@ -38,7 +38,7 @@ class NoticeModel extends Model{
 	 * 公告列表
 	 */
 	public function noticeList(){
-		$notice['data'] = Db::table('notice')->where(['is_del' => 1])
+		$notice['data'] = Db::table('forum_notice')->where(['is_del' => 1])
 			->paginate(10,false,['query' => request()->param()]);
 		$notice['count'] = count($notice['data']);
 		$notice['list'] = $notice['data']->items();
@@ -58,7 +58,7 @@ class NoticeModel extends Model{
 		if($data['sort'] == "" || !is_numeric($data['sort'])){
 			$data['sort'] = 0;
 		}
-		Db::table('notice')->insert($data);
+		Db::table('forum_notice')->insert($data);
 		throw new \Exception('{"code":"1","msg":"发布成功!"}');
 	}
 
@@ -73,17 +73,17 @@ class NoticeModel extends Model{
 		if(empty($id)){
 			throw new \Exception('{"code":"0","msg":"公告不存在!"}');
 		}
-		$key = Db::table('notice')->find(); //随便查找一条数据，为了获取字段
+		$key = Db::table('forum_notice')->find(); //随便查找一条数据，为了获取字段
 		$keys = array_keys($key);   //获取全部字段
 		unset($key);
 		if($value == ""){
 			unset($value);
-			$notice = Db::table('notice')->where(['id' => $id])->find();
+			$notice = Db::table('forum_notice')->where(['id' => $id])->find();
 		}else{
 			if(!in_array($value,$keys)){    //检测字段名是否正确
 				throw new \Exception('{"code":"0","msg":"没有字段名!"}');
 			}
-			$notice = Db::table('notice')->where(['id' => $id])->value($value);
+			$notice = Db::table('forum_notice')->where(['id' => $id])->value($value);
 		}
 		return $notice;
 	}
@@ -103,7 +103,7 @@ class NoticeModel extends Model{
 		}elseif($data['content'] == ""){
 			throw new \Exception('{"code":"0","msg":"内容不能为空!"}');
 		}
-		Db::table('notice')->where(['id' => $data['id']])->update($data);
+		Db::table('forum_notice')->where(['id' => $data['id']])->update($data);
 		throw new \Exception('{"code":"1","msg":"修改成功!"}');
 	}
 
@@ -120,7 +120,7 @@ class NoticeModel extends Model{
 		if($this->data['username'] != $notice){
 			throw new \Exception('{"code":"0","msg":"没有权限修改别人公告！"}');
 		}
-		Db::table('notice')->where(['id' => $data['id']])->update(['is_show' => $data['type']]);
+		Db::table('forum_notice')->where(['id' => $data['id']])->update(['is_show' => $data['type']]);
 		if($data['type'] == 1){
 			throw new \Exception('{"code":"1","msg":"已上架!"}');
 		}elseif ($data['type'] == 2){
@@ -141,7 +141,7 @@ class NoticeModel extends Model{
 		if($this->data['username'] != $notice){
 			throw new \Exception('{"code":"0","msg":"没有权限删除别人公告！"}');
 		}
-		Db::table('notice')->where(['id' => $data['id']])->update(['is_del' => 2]);
+		Db::table('forum_notice')->where(['id' => $data['id']])->update(['is_del' => 2]);
 		throw new \Exception('{"code":"1","msg":"删除成功!"}');
 	}
 

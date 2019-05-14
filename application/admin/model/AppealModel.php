@@ -45,7 +45,7 @@ class AppealModel extends Model{
         }
         $map = array();
         $map['type'] = $tion;
-        $appeal['data'] = Db::table($this->table)->where($map)->paginate(10,false ,['query' => request()->param()]);
+        $appeal['data'] = Db::table('forum_appeal')->where($map)->paginate(10,false ,['query' => request()->param()]);
         $appeal['count'] = count($appeal['data']);
         return $appeal;
     }
@@ -65,7 +65,7 @@ class AppealModel extends Model{
                 throw new \Exception('{"code": "0" , "msg" : "请完善信息,利于你更好的找回账号!"}');
             }
         }
-        Db::table('appeal')->insert($msg);
+        Db::table('forum_appeal')->insert($msg);
         throw new \Exception('{"code": "0" , "msg" : "信息已提交,请耐心等待回复!"}');
     }
 
@@ -80,7 +80,7 @@ class AppealModel extends Model{
             throw new \Exception('{"code": "0" , "msg" : "审核失败,请重试!"}');
         }
         $filed = 'password,number,email,name';
-        $appeal = Db::table($this->table)->where(['id' => $msg['id']])->field($filed)->find();
+        $appeal = Db::table('forum_appeal')->where(['id' => $msg['id']])->field($filed)->find();
         $data = Db::table('user')->where(['username' => $msg['username']])->field($filed)->find();
         $arr = ['password','number','email','name'];
         $Testing = 0;
@@ -92,7 +92,7 @@ class AppealModel extends Model{
         if($Testing < 50){
             throw new \Exception('{"code": "0" , "msg" : "系统不建议通过!"}');
         }elseif($msg['id'] > 0){
-            Db::table($this->table)->where(['id' => $msg['id']])->update(array('type' => $msg['type']));
+            Db::table('forum_appeal')->where(['id' => $msg['id']])->update(array('type' => $msg['type']));
             throw new \Exception('{"code": "0" , "msg" : "已审核!"}');
         }else{
             throw new\Exception('{"code": "0" , "msg" : "参数错误!"}');

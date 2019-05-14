@@ -26,7 +26,7 @@ trait Whole{
     public static function classify(){
         $map = array();
         $map['is_show'] = 1;
-        $classify = Db::table('classify')
+        $classify = Db::table('forum_classify')
             ->where($map)
             ->limit(7)
             ->order('date desc')

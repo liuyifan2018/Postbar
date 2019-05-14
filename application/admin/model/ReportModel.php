@@ -36,11 +36,11 @@ class ReportModel extends Model{
     public function report( $tion ){
         $map = array();
         $map['type'] = $tion;
-        $report['data'] = Db::table('report')->where($map)
+        $report['data'] = Db::table('forum_report')->where($map)
             ->paginate(10,false,['query' => request()->param()]);
         $report['items']  = $report['data']->items();
         foreach ($report['items'] as $k => $v){
-            $report['items'][$k]['title'] = Db::table('note')
+            $report['items'][$k]['title'] = Db::table('forum_note')
                 ->where(array('id' => $v['nid']))
                 ->value('title');
         }
@@ -56,11 +56,11 @@ class ReportModel extends Model{
         if( empty( $msg['nid'] )) {
             throw new \Exception('{"code":"0","msg":"参数错误!"}');
         }
-        $note = Db::table('note')->where(array('id' => $msg['nid']))->find();
+        $note = Db::table('forum_note')->where(array('id' => $msg['nid']))->find();
         if($note == null){
             throw new \Exception('{"code":"0","msg":"帖子不存在!"}');
         }
-        Db::table('report')
+        Db::table('forum_report')
             ->where(array('id' => $msg['id']))
             ->update(array('type' => $msg['type']));
         if($msg['type'] == 2){

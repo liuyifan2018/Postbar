@@ -43,6 +43,11 @@ class Index extends Controller
             $this->error( $e->getMessage() );
         }
     }
+
+	/**
+	 * @return IndexModel
+	 * @throws \Exception
+	 */
     public function model(){
     	return new IndexModel( Whole::dataInfo() );
     }

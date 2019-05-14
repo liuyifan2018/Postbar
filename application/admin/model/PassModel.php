@@ -58,7 +58,7 @@ class PassModel extends Model
      * 选择方式
      */
     public function tion($username){
-        $problem = Db::table('problem')->where(['username' => $username])->select();
+        $problem = Db::table('forum_problem')->where(['username' => $username])->select();
         return $problem;
     }
 
@@ -73,7 +73,7 @@ class PassModel extends Model
             case $msg['problem'] == "": throw new \Exception('{"code":"0" , "msg":"请选择问题!"}');break;
             case $msg['answer'] == "":throw new \Exception('{"code":"0" , "msg":"请输入答案!"}');break;
         }
-       $problem = Db::table('problem')->where($msg)->find();
+       $problem = Db::table('forum_problem')->where($msg)->find();
        if($problem == null){
            throw new \Exception('{"code":"0" , "msg":"答案错误!"}');
         }else{
@@ -115,7 +115,7 @@ class PassModel extends Model
                 throw new \Exception('{"code":"0" , "msg":"请完善信息,利于你更好的找回账号!"}');
             }
         }
-        Db::table('appeal')->insert($msg);
+        Db::table('forum_appeal')->insert($msg);
         throw new \Exception('{"code":"1" , "msg":"信息已提交,请耐心等待回复!"}');
     }
 }

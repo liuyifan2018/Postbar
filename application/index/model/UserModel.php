@@ -54,7 +54,7 @@ class UserModel extends Model{
             throw new \Exception('{"code":"0" , "msg":"账号是必填的!"}');
         }
         $user = Db::table('user')->where(array('username' => $data['username']))->find();
-        $log = Db::table('log')
+        $log = Db::table('forum_log')
             ->where(['username' => $data['username'],'log' => '密码错误'])
             ->whereTime('date','between',array($start_time , $end_time))
             ->count();//查询日志报错次数
@@ -72,11 +72,11 @@ class UserModel extends Model{
         }elseif($user == null){
             throw new \Exception('{"code":"0" , "msg":"账号不存在!"}');
         }elseif($data['password'] != $user['password']){
-            Db::table('log')->data($msg)->insert(['log' => '密码错误']);
+            Db::table('forum_log')->data($msg)->insert(['log' => '密码错误']);
             throw new \Exception('{"code":"0" , "msg":"密码错误!"}');
         }else{
             Session::set('data',$user);
-            Db::table('log')->data($msg)->insert(['log' => '登录成功']);
+            Db::table('forum_log')->data($msg)->insert(['log' => '登录成功']);
             Db::table('user')->where(['username' => $data['username']])->update(['state' => '在线']);
             throw new \Exception('{"code":"1" , "msg":"登录成功!"}');
         }

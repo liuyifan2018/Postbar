@@ -15,7 +15,7 @@ trait Whole{
     public function isUser(){
         $data = Session::get('data');
         if(empty($data)){   //未登录跳入登录页
-        	header('Location: http://lyf.com/Postbar/Public/Index/User/login');
+        	header('Location: http://localhost/Postbar/Public/Index/User/login');
         }
     }
     /**
@@ -25,7 +25,7 @@ trait Whole{
     public static function classify(){
         $map = array();
         $map['is_show'] = 1;
-        $classify = Db::table('classify')
+        $classify = Db::table('forum_classify')
             ->where($map)
             ->limit(7)
             ->order('date desc')
@@ -62,7 +62,7 @@ trait Whole{
         $map = array();
         $map['is_show'] = 1;
         $map['state'] = 1;
-        $hotNote = Db::table('note')
+        $hotNote = Db::table('forum_note')
             ->where($map)
             ->limit(6)
             ->order('num','desc')
@@ -75,7 +75,7 @@ trait Whole{
 	 * 今日最热帖子
 	 */
     public static function todayNote(){
-        $note = Db::table('note')->order('num desc')->find();
+        $note = Db::table('forum_note')->order('num desc')->find();
         return $note;
     }
 }

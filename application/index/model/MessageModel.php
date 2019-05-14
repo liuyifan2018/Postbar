@@ -36,14 +36,14 @@ class MessageModel extends Model
      * 用户消息
      */
     public function message(){
-        $message['fsg'] = Db::table('friend')
+        $message['fsg'] = Db::table('forum_friend')
             ->where(['friend' => $this->data['username'],'is_fd' => 2,'my' => 0])
             ->select(); //tion(1)
-        $message['csg'] = Db::table('content')
+        $message['csg'] = Db::table('forum_content')
             ->where(['is_show' => 1])
             ->whereOr(User::username())
             ->select();//tion(3)
-        $message['rsg'] = Db::table('friend')
+        $message['rsg'] = Db::table('forum_friend')
             ->where(['friend' => $this->data['username'],'my' => 1])
             ->where('is_fd','<>',3)
 	        ->select();  //tion(4)
@@ -59,7 +59,7 @@ class MessageModel extends Model
 	            ->find();
             $item['name'] = $user['name'];
             $item['username'] = $user['username'];
-            $item['title'] = Db::table('note')
+            $item['title'] = Db::table('forum_note')
 	            ->where(['id' => $item['nid']])
 	            ->value('title');   //帖子标题
         }
@@ -79,10 +79,10 @@ class MessageModel extends Model
      */
     public function is_friend( $msg , $code){
         if(!empty($msg['type'])){
-            Db::table('friend')
+            Db::table('forum_friend')
                 ->where(['friend' => $this->data['username'],'username' => $msg['user']])
                 ->update($code); //通过验证加为好友
-            Db::table('friend')
+            Db::table('forum_friend')
                 ->where(['username' => $this->data['username'],'friend' => $msg['user']])
                 ->update($code); //通过验证加为好友
             if($msg['type'] == 1){
@@ -104,7 +104,7 @@ class MessageModel extends Model
         if(empty($id)){
             throw new \Exception('{"code":"0" , "msg":"信息不存在!"}');
         }else{
-            Db::table('content')
+            Db::table('forum_content')
                 ->where(['id' => $id])
                 ->update(['is_show' => 2]);  //删除信息
             throw new \Exception('{"code":"1" , "msg":"删除成功!"}');
@@ -120,7 +120,7 @@ class MessageModel extends Model
         if(empty($username)){
             throw new \Exception('{"code":"0" , "msg":"您当前还未登录!"}');
         }else{
-            Db::table('content')
+            Db::table('forum_content')
 	            ->where(User::username())
 	            ->update(['is_show' => 2]);  //删除所有信息(此方法不可逆);
             throw new \Exception('{"code":"1" , "msg":"删除成功!"}');

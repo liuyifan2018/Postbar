@@ -46,25 +46,25 @@ class NoteModel extends Model
     public function note($tion,$note){
         if(empty($note)){
             if($tion == 2){
-                $noteList['data'] = Db::table('note')
+                $noteList['data'] = Db::table('forum_note')
                     ->paginate(10,false,['query' => request()->param()]);    //帖子列表
                 $noteList['count'] = count($noteList['data']);
             }else{
-                $noteList['data'] = Db::table('note')
+                $noteList['data'] = Db::table('forum_note')
                     ->where(array('state' => $tion))
                     ->paginate(10,false,['query' => request()->param()]);    //已被拒绝的帖子
                 $noteList['count'] = count($noteList['data']);
             }
 
         }else{
-            $noteList['data'] = Db::table('note')
+            $noteList['data'] = Db::table('forum_note')
                 ->where('title','like',$note.'%')
                 ->paginate(10,false,['query' => ['tion' => $tion]]);  //搜索帖子
             $noteList['count'] = count($noteList['data']);
         }
         $noteList['items'] = $noteList['data']->items();
 	    foreach ($noteList['items'] as $k => $v){
-		    $noteList['items'][$k]['tion'] = Db::table('classify')->where(['id' => $v['tion']])->value('tion');
+		    $noteList['items'][$k]['tion'] = Db::table('forum_classify')->where(['id' => $v['tion']])->value('tion');
 	    }
         return $noteList;
     }
@@ -78,13 +78,13 @@ class NoteModel extends Model
 //		    User::username(),
 //		    'date'  =>  Date::getNowTime()
 //	    ];
-//	    Db::table('state')->insert($info);
+//	    Db::table('forum_state')->insert($info);
 	    if( empty($msg) ){
             throw new \Exception('{"code":"0" , "msg":"审核失败,请重试!"}');
         }
         $start_time = Date::getNowStartTime();
         $end_time = Date::getNowEndTime();
-        $noteState = Db::table( 'state')
+        $noteState = Db::table( 'forum_state')
             ->where(User::username())
             ->whereTime('date','between',array($start_time , $end_time))
             ->select();
@@ -105,7 +105,7 @@ class NoteModel extends Model
     public function deleteAll($data){
         $data = json_decode($data,true);
         foreach ($data as $k => $v){
-            Db::table('note')->where(['id' => $v])->delete();
+            Db::table('forum_note')->where(['id' => $v])->delete();
         }
         throw new \Exception('{"code":"0","msg":"批量删除成功!"}');
     }

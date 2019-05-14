@@ -44,18 +44,18 @@ class DataModel extends Model{
         $user['user'] = Db::table('user')
             ->where(['username' => $username])
             ->find();   //用户信息
-        $user['note'] = Db::table('note')
+        $user['note'] = Db::table('forum_note')
             ->where(['username' => $username,'is_show' => 1])
             ->select();  //用户发布的帖子
 	    foreach ($user['note'] as &$item){
-		    $item['count'] = Db::table('content')->where(['nid' => $item['id']])->count();
+		    $item['count'] = Db::table('forum_content')->where(['nid' => $item['id']])->count();
 	    }
-        $user['content'] = Db::table('content')
+        $user['content'] = Db::table('forum_content')
 	        ->where(['username' => $username])
 	        ->select();   //用户评论信息
 	    $user['count'] = count($user['content']);
         foreach($user['content'] as &$item){
-        	$note = Db::table('note')->where(['id' => $item['nid']])->field('id,title')->find();
+        	$note = Db::table('forum_note')->where(['id' => $item['nid']])->field('id,title')->find();
 	        $item['name'] = Db::table('user')->where(['username' => $item['username']])->value('name');
             $item['note'] = $note['title'];    //帖子标题
             $item['noteid'] = $note['id']; //帖子ID
@@ -71,12 +71,12 @@ class DataModel extends Model{
      * 用户签到
      */
     public function signed($start_time,$end_time,$msg){
-        $signed = Db::table('signed')
+        $signed = Db::table('forum_signed')
             ->where(array('username' => $msg['username']))
             ->whereTime('date','between',array($start_time , $end_time))
             ->select(); //检测今天是否签到
         if($signed == NULL){    //没有签到
-            Db::table('signed')
+            Db::table('forum_signed')
                 ->where(array('username' => $msg['username']))
                 ->strict(false)
 	            ->insert($msg);  //记录签到
@@ -128,17 +128,17 @@ class DataModel extends Model{
      * 我的帖子
      */
     public function note(){
-        $note['note'] = Db::table('note')
+        $note['note'] = Db::table('forum_note')
             ->where(User::username())
             ->select(); //我发布的帖子
-        $note['coll'] = Db::table('coll')
+        $note['coll'] = Db::table('forum_coll')
             ->where(['username' => $this->data['username'],'coll' => 1])
             ->select(); //我收藏的帖子
         foreach ($note['coll'] as &$item){
-            $item['title'] = Db::table('note')->where(['id' => $item['nid']])->value('title'); //收藏帖子的标题
+            $item['title'] = Db::table('forum_note')->where(['id' => $item['nid']])->value('title'); //收藏帖子的标题
         }
         foreach ($note['note'] as &$item){
-            $item['count'] = Db::table('content')->where(['nid' => $item['id']])->count(); //我的帖子评论总数
+            $item['count'] = Db::table('forum_content')->where(['nid' => $item['id']])->count(); //我的帖子评论总数
         }
     }
     /**

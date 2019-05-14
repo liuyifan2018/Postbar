@@ -41,7 +41,7 @@ class FriendModel extends Model
      * 好友列表
      */
     public function index( $data ){
-        $friends = Db::table('friend')
+        $friends = Db::table('forum_friend')
             ->where(['username' => $data['username'],'is_fd' => 1])
             ->select();   //我的好友列表
         foreach ($friends as &$item) {
@@ -66,10 +66,10 @@ class FriendModel extends Model
     public function getFriend($friend,$msg,$fsg){
         $start_time = Date::getNowStartTime();
         $end_time = Date::getNowEndTime();
-        $myfd = Db::table('friend')
+        $myfd = Db::table('forum_friend')
             ->where(['username' => $this->data['username'] , 'friend' => $friend])
             ->find();   //检测此用户是否是我的好友
-        $friendList = Db::table('friend')
+        $friendList = Db::table('forum_friend')
             ->where(User::username())
             ->whereTime('date','between',array($start_time , $end_time))
             ->select();//检测当天添加好友次数
@@ -82,8 +82,8 @@ class FriendModel extends Model
         }elseif($myfd['is_fd'] == 2){
             throw new \Exception('{"code":"0" , "msg":"请求已发送,请稍等回复!"}');//你与此用户直接删过,提示的都是这个
         }elseif($myfd == null){
-            Db::table('friend')->where(User::username())->insert($msg);//主动加人
-            Db::table('friend')->where(User::username())->insert($fsg);//被动(被加人点同意,直接建立双方好友关系!);
+            Db::table('forum_friend')->where(User::username())->insert($msg);//主动加人
+            Db::table('forum_friend')->where(User::username())->insert($fsg);//被动(被加人点同意,直接建立双方好友关系!);
             throw new \Exception('{"code":"1" , "msg":"请求已发送,请稍等回复!"}');//发布请求提示的都是这个(如果请求被拒绝,再次请求,会计算当天添加次数)
         }
     }
@@ -96,7 +96,7 @@ class FriendModel extends Model
         if(empty($friend)){ //此用户已不再你的列表里
             throw new \Exception('{"code":"0" , "msg":"删除失败,你俩已不是好友!"}');
         }
-        $del = Db::table('friend')
+        $del = Db::table('forum_friend')
             ->where(array('username' => $this->data['username'],'friend' => $friend))
             ->update(array('is_fd' => 2)); //删除好友
         if($del){
@@ -126,7 +126,7 @@ class FriendModel extends Model
      * 聊天信息
      */
     public function messageInfo( $friend ){
-        $message = Db::table('message')
+        $message = Db::table('forum_message')
             ->where(['username' => $this->data['username'],'friend' => $friend['username']])
             ->whereOr(['username' => $friend['username'],'friend' => $this->data['username']])
             ->order('date asc')

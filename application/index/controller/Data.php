@@ -61,11 +61,11 @@ class Data extends Controller
             $data['last_insider'] = Date::getDate($data['last_insider']);
             $start_time = Date::getNowStartTime();
             $end_time = Date::getNowEndTime();
-            $signed = Db::table('signed')
+            $signed = Db::table('forum_signed')
                 ->where(array('username' => $data['username']))
                 ->whereTime('date','between',array($start_time , $end_time))
                 ->select();//检测今天是否签到
-            $signedUser = Db::table('signed')->where(array('username' => $data['username']))->select();
+            $signedUser = Db::table('forum_signed')->where(array('username' => $data['username']))->select();
             $signedCount = count($signedUser);
             $signedTime = (end($signedUser));
             return view('index',[

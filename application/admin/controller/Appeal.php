@@ -94,7 +94,7 @@ class Appeal extends Controller{
                 return json(array('code' => 0 , 'msg' => '检测失败,请重试!'));
             }
             $filed = 'password,number,email,name';
-            $appeal = Db::table('appeal')->where(array('id' => $msg['id']))->field($filed)->find();
+            $appeal = Db::table('forum_appeal')->where(array('id' => $msg['id']))->field($filed)->find();
             $data = Db::table('user')->where(array('username' => $msg['username']))->field($filed)->find();
             $arr = ['password','number','email','name'];
             $Testing = 0;

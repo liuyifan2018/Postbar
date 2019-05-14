@@ -40,7 +40,7 @@ class ProblemModel extends Model
      * 我的密保
      */
     public function problem(){
-        $problem['data'] = Db::table('problem')
+        $problem['data'] = Db::table('forum_problem')
             ->where(['username' => $this->data['username'],'is_show' => 1])
             ->select();
         $problem['count'] = count($problem['data']);
@@ -58,7 +58,7 @@ class ProblemModel extends Model
         if( empty($msg) ){
             throw new \Exception('{"code":0 , "msg":"添加失败,请重试!"}');
         }
-        $problem = Db::table('problem')->where(array('username' => $this->data['username']))->select();
+        $problem = Db::table('forum_problem')->where(array('username' => $this->data['username']))->select();
         foreach ($problem as $k => $v){
             if($problem[$k]['problem'] == $msg['problem']){
                 throw new \Exception('{"code":0 , "msg":"问题重复!"}');
@@ -71,7 +71,7 @@ class ProblemModel extends Model
         }elseif($msg['answer'] == ""){
             throw new \Exception('{"code":0 , "msg":"答案不能为空!"}');
         }else{
-            Db::table('problem')->insert($code);
+            Db::table('forum_problem')->insert($code);
             throw new \Exception('{"code":1 , "msg":"发布成功!"}');
         }
     }
@@ -85,7 +85,7 @@ class ProblemModel extends Model
         if($id < 1 || empty($id)){
             throw new \Exception('{"code":"0","msg":"参数错误!"}');
         }
-        $problem = Db::table('problem')->where(['id' => $id])->find();
+        $problem = Db::table('forum_problem')->where(['id' => $id])->find();
         return $problem;
     }
     /**
@@ -105,7 +105,7 @@ class ProblemModel extends Model
         }elseif($msg['answer'] == ""){
             throw new \Exception('{"code":"0","msg":"答案不能为空!"}');
         }else{
-            Db::table('problem')
+            Db::table('forum_problem')
                 ->where(['id' => $msg['id']])
                 ->update($msg);
             throw new \Exception('{"code":"1","msg":"修改成功!"}');
@@ -120,7 +120,7 @@ class ProblemModel extends Model
         if($id < 1 || empty($id)){
             throw new \Exception('{"code":"0","msg":"参数错误!"}');
         }else{
-            Db::table('problem')
+            Db::table('forum_problem')
                 ->where(['id' => $id])
                 ->update(['is_show' => 2]);
             throw new \Exception('{"code":"1","msg":"已删除!"}');

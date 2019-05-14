@@ -42,7 +42,7 @@ class SettingModel extends Model
      * 用户登录日志
      */
     public function log(){
-        $logList['data'] = Db::table('log')->where(array('is_show' => 1))->select();
+        $logList['data'] = Db::table('forum_log')->where(array('is_show' => 1))->select();
         $logList['count'] = count($logList['data']);
         return $logList;
     }
@@ -60,7 +60,7 @@ class SettingModel extends Model
 		}elseif($data['items'] > 7){
 			$data['items'] = 7;
 		}
-		Db::table('config')->where(['id' => 1])->update(['items' => $data['items']]);
+		Db::table('forum_config')->where(['id' => 1])->update(['items' => $data['items']]);
 	    throw new \Exception('{"code":"1","msg":"修改成功!"}');
     }
 
@@ -69,7 +69,7 @@ class SettingModel extends Model
 	 * 显示数量
 	 */
     public function item(){
-	    $item = Db::table('config')->where(['id' => 1])->value('items');
+	    $item = Db::table('forum_config')->where(['id' => 1])->value('items');
 	    return $item;
     }
 }

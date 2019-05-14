@@ -36,7 +36,7 @@ class ClassifyModel extends Model {
      * 分类列表
      */
     public function Classify(){
-        $Classify['data'] = Db::table('classify')->select();
+        $Classify['data'] = Db::table('forum_classify')->select();
         $Classify['count'] = count($Classify['data']);
         return $Classify;
     }
@@ -55,7 +55,7 @@ class ClassifyModel extends Model {
         if($data['tion'] == ""){
             throw new \Exception('{"code":0 , "msg":"分类名不能为空!"}');
         }else{
-            Db::table('classify')->insert($data);
+            Db::table('forum_classify')->insert($data);
             throw new \Exception('{"code":1 , "msg":"添加成功!"}');
         }
     }
@@ -73,7 +73,7 @@ class ClassifyModel extends Model {
         }elseif($data['tion'] == ""){
             throw new \Exception('{"code":0 , "msg":"分类名不能为空!"}');
         }else{
-            Db::table('classify')->where(array('id' => $data['id']))->update($data);
+            Db::table('forum_classify')->where(array('id' => $data['id']))->update($data);
             throw new \Exception('{"code":1 , "msg":"修改成功!"}');
         }
     }
@@ -87,7 +87,7 @@ class ClassifyModel extends Model {
         if( empty($id) || $id < 0){
             throw new \Exception('{"code":0 ,"msg": "参数错误!"}');
         }
-        $classify = Db::table('classify')->where(['id' => $id])->find();
+        $classify = Db::table('forum_classify')->where(['id' => $id])->find();
         return $classify;
     }
     /**
@@ -102,7 +102,7 @@ class ClassifyModel extends Model {
         if($this->data['ad'] != 1){
             throw new \Exception('{"code":0 ,"msg": "你当前没有权限操作!"}');
         }else{
-            Db::table('classify')->where(['id' => $data['id']])->update(['is_show' => $data['is_show']]);
+            Db::table('forum_classify')->where(['id' => $data['id']])->update(['is_show' => $data['is_show']]);
             throw new \Exception('{"code":1 ,"msg": "修改成功!"}');
         }
     }
@@ -118,7 +118,7 @@ class ClassifyModel extends Model {
         if($this->data['ad'] != 1){
             throw new \Exception('{"code":0 ,"msg": "你当前没有权限操作!"}');
         }else{
-            Db::table('classify')->where(['id' => $data['id']])->delete();
+            Db::table('forum_classify')->where(['id' => $data['id']])->delete();
             throw new \Exception('{"code":1 ,"msg": "删除成功!"}');
         }
     }

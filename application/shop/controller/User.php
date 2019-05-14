@@ -9,7 +9,7 @@ namespace app\shop\controller;
 
 use think\Controller;
 use think\Db;
-use think\Session;
+use think\facade\Session;
 
 class User extends Controller{
 	/**
@@ -31,17 +31,20 @@ class User extends Controller{
 				}
 			}
 		}
-		if(Request()->isPost()){
-			$data = input('post.');
-			$info = Db::table('user')->where(['username' => $data['username']])->find();
-			if(empty($info)){
-				return '用户不存在!';
-			}elseif($data['password'] != $info['password']){
-				return '密码错误!';
-			}else{
+		try{
+			if(Request()->isPost()){
+				$data = input('post.');
+				$info = Db::table('user')->where(['username' => $data['username']])->find();
+				if(empty($info)){
+					throw new \Exception('{"code":"0","msg":"用户不存在!"}');
+				}elseif($data['password'] != $info['password']){
+					throw new \Exception('{"code":"0","msg":"密码错误!"}');
+				}
 				Session::set('data',$info);
-				return 1;
+				throw new \Exception('{"code":"1","msg":"登录成功!"}');
 			}
+		}catch (\Exception $e){
+			return json_decode($e->getMessage(),true);
 		}
 		return view('login',[
 			'user'  =>  $username
