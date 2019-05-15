@@ -10,6 +10,7 @@ namespace app\sadmin\controller;
 use app\sadmin\model\CateModel;
 use app\sadmin\Traits\Whole;
 use think\Controller;
+use think\Request;
 
 class Cate extends Controller{
 	/**
@@ -48,7 +49,7 @@ class Cate extends Controller{
 
 	/**
 	 * @return \think\response\View
-	 * 获取分类
+	 * 获取分类列表
 	 */
 	public function cate(){
 		try{
@@ -61,4 +62,69 @@ class Cate extends Controller{
 			$this->error( $e->getMessage() );
 		}
 	}
+
+	/**
+	 * @return mixed
+	 * 添加分类
+	 */
+	public function addCate(){
+		try{
+			$this->model = $this->model();
+			if(Request()->isPost()){
+				$data = input('post.');
+				$this->model->addCate( $data );
+			}
+			return view('addCate');
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+
+	/**
+	 * @return mixed|\think\response\View
+	 * 编辑分类
+	 */
+	public function editCate(){
+		try{
+			$this->model = $this->model();
+			if(Request()->isPost()){
+				$data = input('post.');
+				$this->model->editCate( $data );
+				$cate = $this->model->infoCate( $data['id'] , '');
+			}else{
+				$id = input('get.id');
+				$cate = $this->model->infoCate( $id ,'');
+			}
+			return view('editCate',[
+				'cate'    =>  $cate
+			]);
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+
+	/**
+	 * @return mixed
+	 * 是否显示
+	 */
+	public function is_show(){
+		try{
+			$this->model = $this->model();
+			$data = input('get.');
+			$this->model->is_show( $data );
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+
+	public function is_del(){
+		try{
+			$this->model = $this->model();
+			$data = input('get.');
+			$this->model->is_del( $data );
+		}catch (\Exception $e){
+			return json_decode( $e->getMessage() ,true);
+		}
+	}
+
 }

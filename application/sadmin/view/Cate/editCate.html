@@ -1,0 +1,39 @@
+{include file="../application/sadmin/view/header.html"/}
+<script src="http://localhost/Postbar/public/static/sadmin/js/cate/cate.js"></script>
+</head>
+<body>
+<div class="layui-fluid" style="padding: 50px">
+	<div class="layui-row">
+		<div class="layui-form">
+			<input type="hidden" value="{$cate.username}" id="username">
+			<div class="layui-form-item">
+				<label for="title" class="layui-form-label">
+					<span class="x-red">*</span>分类名称:
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="title" name="title" value="{$cate.title}" required="" lay-verify="required"
+						   autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label for="sort" class="layui-form-label">
+					<span class="x-red">*</span>排序
+				</label>
+				<div class="layui-input-inline">
+					<input type="text" id="sort" name="sort" value="{$cate.sort}" required="" lay-verify="required"
+						   autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label for="L_repass" class="layui-form-label">
+				</label>
+				<button onclick="editCate({$cate.id})" class="layui-btn" lay-filter="add" lay-submit="">
+					编辑
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+
+</html>

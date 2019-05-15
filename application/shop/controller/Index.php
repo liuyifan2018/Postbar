@@ -21,11 +21,15 @@ class Index extends Controller{
 	public function type(){
 		$data = input('get.');
 		if($data['data'] == 1){
-			$shopList = Db::table('shop')
+			$shop['shopList'] = Db::table('shop')
 				->where(['is_show' => 1,'is_del' => 1])
 				->order('is_top desc,sort asc,id desc')
-				->select();
-			return json($shopList);
+				->select(); //商品列表
+			$shop['tionList'] = Db::table('shop_tion')
+				->where(['is_show' => 1 , 'is_del' => 1])
+				->order('sort asc')
+				->select(); //分类列表
+			return json($shop);
 		}
 	}
 }
