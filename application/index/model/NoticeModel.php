@@ -46,6 +46,7 @@ class NoticeModel extends Model{
 	/**
 	 * @param $id
 	 * @throws \Exception
+	 * 增加阅读人
 	 */
 	public function num( $id ){
 		if(empty($id)) throw new \Exception('公告不存在!');
@@ -54,6 +55,8 @@ class NoticeModel extends Model{
 			$userList = explode(",",$num);
 			if(!in_array($this->data['username'],$userList)){
 				Db::table('forum_notice')->where(['id' => $id])->update(['num' => $num.$this->data['username'].',']);
+			}else{
+				exit;
 			}
 		}else{
 			Db::table('forum_notice')->where(['id' => $id])->update(['num' => $this->data['username'].',']);//第一个阅读的人

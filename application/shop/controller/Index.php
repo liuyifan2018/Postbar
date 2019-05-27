@@ -16,7 +16,9 @@ class Index extends Controller{
 
 	public function Index(){
 		$id = input('get.id');
-
+		if(empty($id)){
+			$id = 0;
+		}
 		return view('Index',[
 			'id'    =>  $id
 		]);
@@ -29,7 +31,7 @@ class Index extends Controller{
 			'is_del'    =>  1
 		];
 		if(Request()->isGet()){
-			if($data['id'] == 0){
+			if($data['id'] == 0 || is_numeric($data['id'])){
 				$shop['shopList'] = Db::table('shop')
 					->where($map)
 					->order('is_top desc,sort asc,id desc')

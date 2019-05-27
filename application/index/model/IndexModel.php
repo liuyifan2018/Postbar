@@ -44,7 +44,7 @@ class IndexModel extends Model
         $map = array();
         $map['is_show'] = 1;
         $map['state'] = 1;
-        $item = Db::table('forum_config')->where(['id' => 1])->value('items');
+        $item = Db::table('forum_config')   ->where(['id' => 1])->value('items');
         if(empty($tion)){
             $note['note'] = Db::table('forum_note')
                 ->where($map)

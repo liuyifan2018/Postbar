@@ -99,12 +99,30 @@ class NoteModel extends Model
 //	    if(Cache::get(md5(User::username().'article'))){ //检测缓存是否存在
 //            throw new \Exception('{"code":"0" , "msg":"60s后才能重新发布!"}');
 //        }
+//		$money = [20,50,80,100];
+//	    if($this->data['money'] - $money[$msg['money']] < 0){
+//			throw new \Exception('{"code":"0" , "msg":"余额不足!"}');
+//		}
 	    if($msg['answer'] != $msg['ploper']){   //防止恶意添加帖子
             throw new \Exception('{"code":"0" , "msg":"答案错误!"}');
         }
-        Db::table('forum_note')->strict(false)->insert($msg);  //添加帖子
+//	    $this->decMoney($money[$msg['money']]);
+
+	    Db::table('forum_note')->strict(false)->insert($msg);  //   添加帖子
 //        Cache::set(md5(User::username().'article'),1,60);
 	    throw new \Exception('{"code":"1" , "msg":"发布成功!"}');
+    }
+
+	/**
+	 * @param $money
+	 * @throws \Exception
+	 * 帖子消费
+	 */
+    public function decMoney( $money ){
+		if(empty($money)){
+			throw new \Exception('{"code":"0","msg":"异常错误!"}');
+		}
+		Db::table('user')->where(['username' => $this->data['username']])->setDec('money',$money);
     }
     /**
      * @param $msg

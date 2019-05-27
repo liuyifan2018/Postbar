@@ -46,7 +46,7 @@ class Note extends Controller
         return new NoteModel( Whole::dataInfo() );
     }
     /**
-     * @return mixed
+     * @return mixed+
      * 帖子详情
      */
     public function note(){
